@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Enrich Your Inbound Leads with AI (Step-by-Step)</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 760px; margin: 0 auto; padding: 40px 24px; color: #1a1a2e; line-height: 1.75; font-size: 17px; }
+  h1 { font-size: 2.1em; font-weight: 800; line-height: 1.2; margin-bottom: 16px; }
+  h2 { font-size: 1.4em; font-weight: 700; margin-top: 44px; margin-bottom: 14px; }
+  h3 { font-size: 1.1em; font-weight: 700; margin-top: 28px; margin-bottom: 8px; color: #FF6B35; }
+  .meta { color: #888; font-size: 14px; margin-bottom: 40px; }
+  .intro { font-size: 1.12em; color: #333; border-left: 3px solid #FF6B35; padding-left: 20px; margin-bottom: 36px; }
+  .step-wrapper { margin: 32px 0; }
+  .step-header { background: #1A1A2E; color: white; border-radius: 10px 10px 0 0; padding: 18px 24px; display: flex; gap: 16px; align-items: center; }
+  .step-header .num { background: #FF6B35; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px; flex-shrink: 0; }
+  .step-header .title { font-weight: 700; font-size: 17px; }
+  .step-header .subtitle { font-size: 13px; color: rgba(255,255,255,0.6); margin-top: 2px; }
+  .step-body { background: #f9f9f9; border: 1.5px solid #eee; border-top: none; border-radius: 0 0 10px 10px; padding: 24px; }
+  .quote { background: white; border-left: 4px solid #FF6B35; padding: 18px 22px; margin: 24px 0; border-radius: 0 8px 8px 0; font-style: italic; color: #333; font-size: 15px; }
+  .quote .attribution { font-style: normal; font-size: 13px; color: #888; margin-top: 8px; }
+  .stat-row { display: flex; gap: 16px; flex-wrap: wrap; margin: 24px 0; }
+  .stat-box { flex: 1; min-width: 130px; background: white; border-radius: 10px; padding: 18px; text-align: center; border: 1.5px solid #eee; border-top: 3px solid #FF6B35; }
+  .stat-box .num { font-size: 1.8em; font-weight: 800; color: #FF6B35; }
+  .stat-box .label { font-size: 11px; color: #666; margin-top: 4px; line-height: 1.4; }
+  .callout { background: #FFF0EB; border-radius: 10px; padding: 16px 20px; margin: 20px 0; font-size: 15px; }
+  .callout strong { color: #FF6B35; }
+  .code-block { background: #1A1A2E; color: #f0f0f0; border-radius: 8px; padding: 18px 20px; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 13px; margin: 16px 0; overflow-x: auto; }
+  .code-block .comment { color: #888; }
+  ul, ol { padding-left: 22px; }
+  li { margin-bottom: 8px; }
+  a { color: #FF6B35; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+  th { background: #1A1A2E; color: white; padding: 10px 14px; text-align: left; }
+  td { padding: 10px 14px; border-bottom: 1px solid #eee; }
+  tr:nth-child(even) td { background: #f9f9f9; }
+  .results-box { background: #1A1A2E; color: white; border-radius: 12px; padding: 28px 32px; margin: 32px 0; }
+  .results-box h3 { color: #FF6B35; margin-top: 0; }
+  .results-box ul { color: rgba(255,255,255,0.85); }
+</style>
+</head>
+<body>
+
+<div class="meta">Clay Team · How-To Guide · 12 min read</div>
+
+<h1>How to Enrich Your Inbound Leads with AI</h1>
+
+<div class="intro">
+Most inbound enrichment setups are either too slow, too incomplete, or too manual to matter. This guide walks through a production-ready AI enrichment workflow that turns a name and email into a fully qualified, scored, and routed lead — in under two minutes.
+</div>
+
+<p>Your inbound form is already asking for too much. Every extra field you add to capture data that enrichment could find automatically is costing you conversions. And the longer your enrichment process takes after submission, the less likely you are to connect with that lead at all.</p>
+
+<p>The system we'll build here requires only two fields from your leads — name and email — and automatically fills in everything else before a rep ever looks at the record.</p>
+
+<h2>What you'll build</h2>
+
+<p>A real-time inbound enrichment pipeline that does the following automatically, in sequence, the moment a lead submits a form:</p>
+
+<ul>
+  <li>Captures the lead from any source (Typeform, HubSpot, webhook)</li>
+  <li>Enriches firmographic data: company, headcount, industry, funding, tech stack</li>
+  <li>Enriches contact data: job title, seniority, LinkedIn profile, role history</li>
+  <li>Cleans and normalizes all data for scoring and CRM compatibility</li>
+  <li>Scores the lead on ICP fit and intent signals</li>
+  <li>Routes to the correct rep with a Slack notification</li>
+  <li>Pushes enriched data to CRM and sequence tool</li>
+</ul>
+
+<p>Let's build it step by step.</p>
+
+<div class="step-wrapper">
+  <div class="step-header">
+    <div class="num">1</div>
+    <div>
+      <div class="title">Connect your lead source</div>
+      <div class="subtitle">Get form submissions into Clay in real time</div>
+    </div>
+  </div>
+  <div class="step-body">
+    <p>The first thing to get right is latency at the top of the funnel. A batched nightly sync won't work here — you need leads hitting your enrichment pipeline the moment they submit.</p>
+
+    <p><strong>For Typeform:</strong> Clay has a native Typeform integration. Go to Actions → Import → Import Typeform form responses, link your Typeform account, and the table will populate automatically with each new response as it arrives.</p>
+
+    <p><strong>For everything else (HubSpot forms, product signups, Zoom webinars, chatbots):</strong> Use a webhook. In Clay, go to Actions → Import → Pull in data from a Webhook. Copy the webhook URL, paste it into your source tool, and data starts flowing in real time.</p>
+
+    <div class="callout">
+      <strong>What you need from the form:</strong> Name + work email. That's it. Everything else gets enriched automatically in the next steps.
+    </div>
+
+    <p>One edge case to handle from the start: personal email addresses (Gmail, Yahoo, Hotmail). About 15-20% of inbound form submissions use personal emails. Route these into a separate branch that attempts enrichment via name + company name if provided, and uses Clay's SSO data if your product supports Google login.</p>
+  </div>
+</div>
+
+<div class="step-wrapper">
+  <div class="step-header">
+    <div class="num">2</div>
+    <div>
+      <div class="title">Enrich the company — corner pieces first</div>
+      <div class="subtitle">From email domain to full firmographic profile</div>
+    </div>
+  </div>
+  <div class="step-body">
+    <p>With a work email address, you can derive the company domain. From the domain, you can unlock the full firmographic profile. This is the "corner pieces" approach: find the identifiers first, then use them to pull everything else.</p>
+
+    <p><strong>Key enrichments to run at the company level:</strong></p>
+    <ul>
+      <li>Company LinkedIn URL (from domain)</li>
+      <li>Employee headcount (total and by department)</li>
+      <li>Industry and sub-industry classification</li>
+      <li>Company description</li>
+      <li>Funding stage and most recent round size + date</li>
+      <li>Tech stack (what tools they're using)</li>
+      <li>Headquarters location</li>
+      <li>Annual revenue estimate</li>
+    </ul>
+
+    <p><strong>Use a waterfall approach — don't rely on a single provider.</strong> No single data provider has 100% coverage. Run your enrichment request through Provider A first; if no match, fall through to Provider B, then C. You only pay for successful lookups, and your coverage dramatically improves.</p>
+
+    <div class="callout">
+      <strong>Coverage benchmark:</strong> OpenAI switched from a single-provider enrichment approach to Clay's waterfall and doubled their enrichment coverage immediately. Anthropic went from scattered vendors to Clay and hit 3x their previous coverage rate.
+    </div>
+  </div>
+</div>
+
+<div class="step-wrapper">
+  <div class="step-header">
+    <div class="num">3</div>
+    <div>
+      <div class="title">Enrich the contact</div>
+      <div class="subtitle">From a name and email to a full prospect profile</div>
+    </div>
+  </div>
+  <div class="step-body">
+    <p>With the company enriched, you now use a combination of name + company domain to find the contact's LinkedIn profile and pull their full professional history.</p>
+
+    <p><strong>Key enrichments to run at the contact level:</strong></p>
+    <ul>
+      <li>LinkedIn profile URL</li>
+      <li>Current job title (exact text, then normalized)</li>
+      <li>Seniority level (C-Suite / VP / Director / Manager / IC)</li>
+      <li>Years in current role</li>
+      <li>Past employers and roles (especially if they came from a competitor or major customer)</li>
+      <li>Location</li>
+    </ul>
+
+    <p>The contact's role history is more valuable than most teams realize. A new VP who just joined from a company that's already your customer is a very different conversation starter than a VP who's been in the role for four years with no history of using similar tools.</p>
+
+    <p><strong>Run contact enrichment in parallel with company enrichment</strong> — not sequentially — to reduce total pipeline latency.</p>
+  </div>
+</div>
+
+<div class="step-wrapper">
+  <div class="step-header">
+    <div class="num">4</div>
+    <div>
+      <div class="title">Add intent signals with AI web scraping</div>
+      <div class="subtitle">The differentiating layer no competitor can replicate</div>
+    </div>
+  </div>
+  <div class="step-body">
+    <p>Firmographic data is table stakes. Every team running enrichment has headcount and industry. The signals that actually differentiate your outreach — and justify a rep's priority attention — come from sources that aren't in structured databases.</p>
+
+    <p>Use Claygent (Clay's AI web scraper) to answer custom questions about each company automatically:</p>
+
+    <table>
+      <tr><th>Signal</th><th>What to check</th><th>Why it matters</th></tr>
+      <tr><td>Open roles</td><td>Job descriptions for relevant titles</td><td>Hiring a RevOps Manager = scaling data infrastructure needs</td></tr>
+      <tr><td>Tech stack changes</td><td>Recent job posts mentioning new tools</td><td>A company switching from Salesforce to HubSpot has a specific timing window</td></tr>
+      <tr><td>Recent funding</td><td>Crunchbase + news search</td><td>New capital = new budget cycle = right timing</td></tr>
+      <tr><td>Competitive presence</td><td>Company website + G2 reviews</td><td>Understand what they're already using and unhappy with</td></tr>
+      <tr><td>Keywords on website</td><td>Homepage and about page</td><td>Confirm sub-industry fit that firmographics miss</td></tr>
+    </table>
+
+    <p>A Claygent prompt to check whether a company is a good fit for a specific use case costs less than a penny per lookup and completes in seconds. It's the difference between routing based on headcount alone versus routing based on actual signals of need.</p>
+  </div>
+</div>
+
+<div class="step-wrapper">
+  <div class="step-header">
+    <div class="num">5</div>
+    <div>
+      <div class="title">Clean and normalize your data</div>
+      <div class="subtitle">Because garbage data breaks scoring, routing, and CRM</div>
+    </div>
+  </div>
+  <div class="step-body">
+    <p>Raw enriched data is inconsistent. Before it reaches your scoring logic or CRM, run it through normalization:</p>
+
+    <ul>
+      <li><strong>Company names:</strong> Strip legal suffixes (Inc., LLC, Corp.) and normalize casing. "Salesforce, Inc." and "SALESFORCE" become "Salesforce."</li>
+      <li><strong>Job title seniority:</strong> Use an AI formula to classify any job title into a standard tier. "Global Head of Revenue Strategy" → "VP." "Senior Account Executive - APAC" → "IC."</li>
+      <li><strong>Phone numbers:</strong> Normalize to E.164 format (+1XXXXXXXXXX)</li>
+      <li><strong>Industry classification:</strong> Standardize against your ICP's industry taxonomy</li>
+      <li><strong>Email validation:</strong> Verify deliverability before any sequence enrollment</li>
+    </ul>
+
+    <p>Clay's built-in normalization tools handle most of this without using AI credits. Use AI formulas (credit-free) for the classification tasks that require inference — like standardizing job title seniority for job titles that don't match a clean pattern.</p>
+
+    <div class="callout">
+      <strong>Why this matters for scoring:</strong> A scoring rule that says "Seniority = VP or above" is only as good as your seniority normalization. If half your titles are still in raw "Global Head of..." format, your scoring model will miss half your best leads.
+    </div>
+  </div>
+</div>
+
+<div class="step-wrapper">
+  <div class="step-header">
+    <div class="num">6</div>
+    <div>
+      <div class="title">Score the lead</div>
+      <div class="subtitle">Build a model that produces a prioritization tier, not just a number</div>
+    </div>
+  </div>
+  <div class="step-body">
+    <p>A lead score is only useful if it produces a routing decision. Design your scoring model with tiers in mind:</p>
+
+    <p><strong>Tier 1 (Immediate rep action):</strong></p>
+    <ul>
+      <li>Company headcount in target range (e.g., 50–500)</li>
+      <li>Industry matches ICP exactly</li>
+      <li>Contact is Director or above</li>
+      <li>Has a relevant intent signal (hiring, recent funding, tech stack signal)</li>
+    </ul>
+
+    <p><strong>Tier 2 (Sequence enrollment):</strong></p>
+    <ul>
+      <li>Company roughly matches ICP but missing one signal</li>
+      <li>Contact is Manager level</li>
+      <li>No strong intent signal but good fit</li>
+    </ul>
+
+    <p><strong>Tier 3 / Nurture:</strong></p>
+    <ul>
+      <li>Company is outside ICP headcount range</li>
+      <li>Contact is IC level</li>
+      <li>Missing company data (often personal email signups)</li>
+    </ul>
+
+    <p>Clay's native Score Row enrichment lets you define up to 15 scoring criteria with weights, and outputs a numerical score plus a plain-language reasoning summary. This reasoning is useful for reps — they can see immediately why a lead scored the way it did.</p>
+
+    <p>For more custom scoring logic, use an AI formula with your full enriched data as input. Prompt: "Based on the following company and contact data, score this lead from 0-100 for fit as a [product] customer. Explain your score in one sentence." The output becomes your scoring column and rationale column.</p>
+  </div>
+</div>
+
+<div class="step-wrapper">
+  <div class="step-header">
+    <div class="num">7</div>
+    <div>
+      <div class="title">Route to the right rep and generate messaging</div>
+      <div class="subtitle">The final step before the lead hits a human</div>
+    </div>
+  </div>
+  <div class="step-body">
+    <p>With a scored lead, routing is straightforward. Build a rep table with current rep list, weights, territory assignments, and availability status. Use Clay's native Distribute Leads Round Robin (Weighted) enrichment to assign leads automatically based on that rep table.</p>
+
+    <p>Once a lead is assigned, two things should fire simultaneously:</p>
+
+    <p><strong>1. Slack notification to the rep</strong> with the full enriched profile: company name, headcount, industry, ICP score, intent signals found, and a direct link to the CRM record.</p>
+
+    <p><strong>2. Pre-drafted personalized first email</strong> using an AI snippet generated from the enriched data. A single personalized sentence — based on a signal specific to this company — does most of the work:</p>
+
+    <div class="code-block">
+      <span class="comment">// Sample AI prompt for inbound first-touch snippet:</span>
+      <br><br>
+      Using the following inputs, write one sentence for a cold email opener
+      that references something specific to this company.
+      <br><br>
+      Company: {{company_name}}
+      <br>
+      Recent signal: {{intent_signal}}
+      <br>
+      Industry: {{industry}}
+      <br><br>
+      Keep it under 15 words. Write as if you noticed this naturally.
+      Do not mention that you used AI. Do not start with "I noticed."
+    </div>
+
+    <p>The rep reviews the draft and can send immediately — or edit before sending. For Tier 2 leads, the message can fire automatically into a sequence without rep review.</p>
+  </div>
+</div>
+
+<div class="step-wrapper">
+  <div class="step-header">
+    <div class="num">8</div>
+    <div>
+      <div class="title">Push to CRM and sequencer</div>
+      <div class="subtitle">Complete the pipeline — clean, deduplicated, and ready</div>
+    </div>
+  </div>
+  <div class="step-body">
+    <p>Before pushing to your CRM, always run a deduplication check. Use Lookup Contact or Lookup Company enrichment to check for existing records by email and domain. This prevents duplicate creation and avoids the embarrassment of reaching out to existing customers with new-lead messaging.</p>
+
+    <p>If the contact exists: update their record with the new enriched data fields. If it's net new: create the contact and company in the CRM with all enriched fields pre-populated.</p>
+
+    <p>Simultaneously, enroll the lead in the appropriate sequence in your email tool (Instantly, Smartlead, Outreach, Salesloft) based on their tier and segment. Tier 1 leads go to a high-touch AE-driven sequence. Tier 2 leads go to an automated SDR sequence. Tier 3 leads go to a long-term nurture.</p>
+
+    <div class="callout">
+      <strong>Two-way sync:</strong> Set your Clay table to refresh enrichment on a schedule — weekly or monthly — so that CRM records don't decay. Companies that were 50 employees when a lead signed up might be 500 employees six months later. That's a different conversation.
+    </div>
+  </div>
+</div>
+
+<h2>What this pipeline produces</h2>
+
+<div class="stat-row">
+  <div class="stat-box"><div class="num">&lt;2 min</div><div class="label">From form submit to enriched, scored, routed lead</div></div>
+  <div class="stat-box"><div class="num">2</div><div class="label">Form fields required from the prospect</div></div>
+  <div class="stat-box"><div class="num">0</div><div class="label">Manual research steps for the rep</div></div>
+</div>
+
+<div class="results-box">
+  <h3>Teams that built this pipeline</h3>
+  <ul>
+    <li><strong>ElevenLabs:</strong> +50% lift in SQLs from automated lead scoring, 4x SQLs from demand gen campaigns, inbound speed-to-lead under 5 minutes</li>
+    <li><strong>Anthropic:</strong> 3x enrichment coverage, 4 hours/week saved with automations, consolidated from multiple data vendors to one</li>
+    <li><strong>OpenAI:</strong> 2x enrichment coverage, 100% automated research tasks across all sales reps</li>
+    <li><strong>Harmonic:</strong> 2x SDR capacity, 50 hours/month of manual work eliminated, 3x response rate</li>
+  </ul>
+</div>
+
+<h2>Common mistakes to avoid</h2>
+
+<p><strong>Running enrichment in sequence instead of parallel.</strong> If you run company enrichment, wait for it to finish, then run contact enrichment, your total pipeline time doubles. Run them in parallel wherever possible.</p>
+
+<p><strong>Using a single data provider.</strong> Coverage gaps from a single provider kill your enrichment rates. Waterfall enrichment through multiple providers is not optional — it's the foundation.</p>
+
+<p><strong>Skipping deduplication.</strong> The most common enrichment pipeline failure mode is reaching out to an existing customer or active prospect with a "new lead" message. A simple CRM lookup before any sequence enrollment prevents this completely.</p>
+
+<p><strong>Over-engineering the scoring model before testing it.</strong> Start with 3-5 scoring criteria based on what you know about your best customers. Run it live for two weeks, look at which Tier 1 leads converted and which didn't, and refine from there. A simple model that's actively maintained beats a sophisticated model that no one understands.</p>
+
+<p><strong>Skipping the normalization step.</strong> If your job title seniority field has 40 different formats, your seniority-based routing logic will fail silently. Clean data before it hits scoring or CRM — always.</p>
+
+<hr style="margin: 48px 0; border: none; border-top: 1px solid #eee;">
+
+<p style="font-size: 14px; color: #888;">Want to see the full workflow in Clay? <a href="https://clay.com/university/automated-inbound">Clay University's Automated Inbound course</a> walks through every step with video walkthroughs and shared template tables. Or <a href="https://app.clay.com/signup">start building for free</a>.</p>
+
+</body>
+</html>
