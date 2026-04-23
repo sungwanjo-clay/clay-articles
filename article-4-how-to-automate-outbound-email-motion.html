@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Automate Your Outbound Email Motion — Step by Step</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 760px; margin: 0 auto; padding: 40px 24px; color: #1a1a2e; line-height: 1.75; font-size: 17px; }
+  h1 { font-size: 2.1em; font-weight: 800; line-height: 1.2; margin-bottom: 16px; }
+  h2 { font-size: 1.4em; font-weight: 700; margin-top: 44px; margin-bottom: 12px; }
+  h3 { font-size: 1.05em; font-weight: 700; margin-top: 24px; margin-bottom: 8px; color: #FF6B35; }
+  .meta { color: #888; font-size: 14px; margin-bottom: 40px; }
+  .intro { font-size: 1.12em; color: #333; border-left: 3px solid #FF6B35; padding-left: 20px; margin-bottom: 36px; }
+  .step-wrapper { margin: 28px 0; border: 1.5px solid #eee; border-radius: 12px; overflow: hidden; }
+  .step-header { background: #1A1A2E; color: white; padding: 20px 26px; display: flex; gap: 16px; align-items: flex-start; }
+  .step-header .num { background: #FF6B35; color: white; border-radius: 8px; padding: 4px 10px; font-weight: 800; font-size: 13px; flex-shrink: 0; margin-top: 2px; }
+  .step-header .head { }
+  .step-header .head h2 { color: white; margin: 0 0 4px; font-size: 1.15em; border: none; padding: 0; }
+  .step-header .head .sub { font-size: 13px; color: rgba(255,255,255,0.55); }
+  .step-body { padding: 24px 26px; background: white; }
+  .callout { background: #FFF0EB; border-radius: 8px; padding: 14px 18px; margin: 16px 0; font-size: 15px; }
+  .callout strong { color: #FF6B35; }
+  .quote { background: #f9f9f9; border-left: 4px solid #FF6B35; padding: 16px 20px; margin: 20px 0; border-radius: 0 8px 8px 0; font-style: italic; color: #333; font-size: 15px; }
+  .quote .attribution { font-style: normal; font-size: 13px; color: #888; margin-top: 8px; }
+  .code-block { background: #1A1A2E; color: #f0f0f0; border-radius: 8px; padding: 16px 20px; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 13px; margin: 16px 0; overflow-x: auto; line-height: 1.6; }
+  .code-block .comment { color: #888; }
+  .code-block .highlight { color: #FF6B35; }
+  ul, ol { padding-left: 22px; }
+  li { margin-bottom: 8px; }
+  a { color: #FF6B35; }
+  .do-dont { display: flex; gap: 16px; flex-wrap: wrap; margin: 20px 0; }
+  .do-box, .dont-box { flex: 1; min-width: 200px; border-radius: 10px; padding: 16px 20px; font-size: 14px; }
+  .do-box { background: #f0fff4; border: 1.5px solid #4CAF50; }
+  .do-box h4 { color: #2e7d32; margin: 0 0 10px; font-size: 13px; }
+  .dont-box { background: #fff5f5; border: 1.5px solid #f44336; }
+  .dont-box h4 { color: #c62828; margin: 0 0 10px; font-size: 13px; }
+  .do-box li, .dont-box li { margin-bottom: 6px; }
+  .results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin: 24px 0; }
+  .result-card { background: #f9f9f9; border-radius: 10px; padding: 18px; text-align: center; border-top: 3px solid #FF6B35; }
+  .result-card .num { font-size: 1.9em; font-weight: 800; color: #FF6B35; }
+  .result-card .company { font-size: 11px; color: #888; margin-top: 4px; font-weight: 700; text-transform: uppercase; }
+  .result-card .label { font-size: 12px; color: #555; margin-top: 4px; line-height: 1.4; }
+  .prompt-box { background: #f9f9f9; border: 1.5px solid #eee; border-radius: 10px; padding: 20px; margin: 16px 0; }
+  .prompt-box .prompt-label { font-size: 11px; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+  .prompt-box .prompt-text { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 13px; line-height: 1.7; color: #333; }
+  .prompt-box .prompt-example { margin-top: 12px; font-size: 13px; color: #555; border-top: 1px solid #eee; padding-top: 12px; }
+</style>
+</head>
+<body>
+
+<div class="meta">Clay Team · How-To Guide · Automated Outbound</div>
+
+<h1>How to Automate Your Outbound Email Motion</h1>
+
+<div class="intro">
+  This is a step-by-step playbook for building an outbound email system that combines ICP precision, multi-provider data enrichment, AI personalization, and automated sequencing. You'll end up with a production-ready workflow — not a proof of concept.
+</div>
+
+<p>Before we get into the steps: the most important thing to understand about outbound email automation is that the goal isn't to send more emails. The teams winning at outbound are sending fewer emails than they used to — with much higher quality per send. Every step in this guide is oriented around increasing the quality and relevance of what you send, not the volume.</p>
+
+<p>Rootly automated 100% of their outbound workflows with Clay and achieved 10x team performance with a leaner sales org. Sendoso generated $1M+ in pipeline. Rippling doubled cold email performance with zero engineering resources required. Here's how systems like theirs are built.</p>
+
+<div class="step-wrapper">
+  <div class="step-header">
+    <div class="num">Step 1</div>
+    <div class="head">
+      <h2>Lock your ICP before building anything</h2>
+      <div class="sub">The most common reason outbound automation fails is targeting too broad</div>
+    </div>
+  </div>
+  <div class="step-body">
+    <p>Don't open Clay yet. Before building any workflow, you need to define exactly who you're targeting — specifically enough that your messaging can be relevant to every recipient.</p>
+
+    <p>Answer these questions:</p>
+    <ul>
+      <li><strong>Company profile:</strong> What industry, headcount range, and location defines your best-fit customers?</li>
+      <li><strong>Tech stack signals:</strong> What tools do your best customers already use? (Indicates integration fit, budget, and sophistication level)</li>
+      <li><strong>Timing signal:</strong> What event or situation tells you a company needs your product <em>right now</em>? A recent hire, funding event, team growth, or tool switch?</li>
+      <li><strong>Contact profile:</strong> What job title and seniority level makes the buying decision? Who experiences the pain most acutely?</li>
+      <li><strong>Negative ICP:</strong> What signals tell you a company is a waste of time — even if they look good on firmographic filters?</li>
+    </ul>
+
+    <div class="callout">
+      <strong>Specificity test:</strong> Write down your ICP definition. If it could describe more than 5,000 companies, narrow it. The best outbound campaigns target 200-500 highly specific companies, not 20,000 generic ones.
+    </div>
+
+    <p>Your ICP definition will directly shape every subsequent step — what to enrich for, what signals to look for, and what your emails say. Get it right first.</p>
+  </div>
+</div>
+
+<div class="step-wrapper">
+  <div class="step-header">
+    <div class="num">Step 2</div>
+    <div class="head">
+      <h2>Build your source list</h2>
+      <div class="sub">Start with a broad filter, then narrow with deep targeting</div>
+    </div>
+  </div>
+  <div class="step-body">
+    <p>In Clay, create a new table and pull your starting list from a data source. Common options:</p>
+    <ul>
+      <li><strong>Find Companies in Clay:</strong> Filter by industry, headcount, location, keywords directly within Clay's company search</li>
+      <li><strong>Apollo:</strong> Export a filtered list and import as a CSV into Clay</li>
+      <li><strong>LinkedIn Sales Navigator:</strong> Run a company or people search and pull via Clay's Sales Navigator integration</li>
+      <li><strong>People Data Labs:</strong> Available directly as an enrichment inside Clay for high-volume sourcing</li>
+    </ul>
+
+    <p>At this stage, you're pulling a broad list. You'll narrow it in the enrichment step. Aim for a source list of 1,000–5,000 companies and expect to narrow to your final outreach list during enrichment and qualification.</p>
+
+    <h3>Finding the right contact at each company</h3>
+    <p>Once you have companies, you need the right person. Use Clay's Find People enrichment to search for specific job titles within each company. Be specific: don't just search for "Marketing" — search for "Head of Growth" or "Director of Revenue Operations" or whatever title most closely matches your buyer.</p>
+
+    <p>If you have multiple potential buyer personas (e.g., both the VP of Sales and the Head of RevOps), pull both and either sequence them simultaneously or prioritize based on company size (senior leaders at larger companies, direct practitioners at smaller ones).</p>
+  </div>
+</div>
+
+<div class="step-wrapper">
+  <div class="step-header">
+    <div class="num">Step 3</div>
+    <div class="head">
+      <h2>Enrich for qualification and personalization</h2>
+      <div class="sub">The data that makes every email feel individually researched</div>
+    </div>
+  </div>
+  <div class="step-body">
+    <p>Enrichment serves two purposes: qualifying your list (removing companies that don't actually fit your ICP despite passing broad filters) and building the context your AI copywriting will use.</p>
+
+    <h3>Company enrichment — run these in parallel</h3>
+    <ul>
+      <li>Employee headcount by department (not just total headcount)</li>
+      <li>Tech stack — are they using tools your product integrates with or replaces?</li>
+      <li>Recent funding (date and round size)</li>
+      <li>Company description (for AI summarization)</li>
+      <li>Website keyword check via Claygent (does their website mention the problem you solve?)</li>
+      <li>Open jobs in relevant departments (Claygent scrape of their careers page)</li>
+    </ul>
+
+    <h3>Contact enrichment</h3>
+    <ul>
+      <li>LinkedIn profile URL (unlocks everything else)</li>
+      <li>Full work history (tenure at current role, previous companies)</li>
+      <li>Recent LinkedIn activity (last post summary for personalization)</li>
+      <li>Email address — use waterfall enrichment across multiple providers</li>
+    </ul>
+
+    <h3>Set up your email waterfall</h3>
+    <p>For email finding, don't rely on a single provider. Set up a sequential waterfall:</p>
+
+    <div class="code-block">
+      <span class="comment">// Email waterfall — runs in sequence, stops when found</span>
+      <br>1. Try Provider A (e.g., Apollo) → found? Use it.
+      <br>2. If not → try Provider B (e.g., Hunter) → found? Use it.
+      <br>3. If not → try Provider C (e.g., Prospeo) → found? Use it.
+      <br>4. If not → try Clay's "Guess Work Email" → found? Use it.
+      <br>5. If not → flag for manual review or skip
+      <br><br><span class="highlight">Result: one master email column with best available email per contact</span>
+      <br><span class="comment">// You only pay for successful lookups at each provider</span>
+    </div>
+
+    <p>After finding emails, run them through an email validation enrichment (Debounce or NeverBounce, both available in Clay) to verify deliverability before adding anyone to a sequence.</p>
+
+    <h3>Use conditional runs to save credits</h3>
+    <p>Don't run every enrichment on every row. Use conditional logic: only run the personal email waterfall for rows where a work email wasn't found. Only run the deep Claygent research on rows that passed your basic firmographic qualification. This can reduce your enrichment credit spend by 40-60% on a typical list.</p>
+
+    <div class="callout">
+      <strong>Qualification filtering:</strong> After enrichment, add a qualification column that evaluates whether the company actually passed your ICP criteria. Use an AI formula: "Based on the following data, is this company a good fit for [product]? Answer Yes or No and explain in one sentence." Filter to Yes before running any personalization.
+    </div>
+  </div>
+</div>
+
+<div class="step-wrapper">
+  <div class="step-header">
+    <div class="num">Step 4</div>
+    <div class="head">
+      <h2>Clean and normalize your data</h2>
+      <div class="sub">Messy data breaks personalization and makes AI outputs look scraped</div>
+    </div>
+  </div>
+  <div class="step-body">
+    <p>Raw enriched data contains artifacts that reveal automation to anyone reading the email. Fix them before they become embarrassing.</p>
+
+    <div class="do-dont">
+      <div class="do-box">
+        <h4>✓ After normalization</h4>
+        <ul>
+          <li>Company: Salesforce</li>
+          <li>Title: VP of Sales</li>
+          <li>Location: Austin area</li>
+          <li>Headcount: 250</li>
+        </ul>
+      </div>
+      <div class="dont-box">
+        <h4>✗ Raw enriched data</h4>
+        <ul>
+          <li>Company: SALESFORCE, INC.</li>
+          <li>Title: VP Sales, EMEA/ENT || Revenue</li>
+          <li>Location: Austin, Texas, United States</li>
+          <li>Headcount: 247</li>
+        </ul>
+      </div>
+    </div>
+
+    <p>Key normalization steps:</p>
+    <ul>
+      <li><strong>Company name:</strong> Use Clay's native "Normalize Company Name" tool (free, no credits)</li>
+      <li><strong>Job title:</strong> Use an AI formula to strip extra info and standardize. "VP Sales, EMEA/ENT || Revenue" → "VP of Sales"</li>
+      <li><strong>Location:</strong> Use an AI formula to convert to how locals refer to it. "Austin, Texas, United States" → "Austin area" or "Austin, TX"</li>
+      <li><strong>Headcount:</strong> Round to a natural number for use in copy. 247 → ~250</li>
+    </ul>
+
+    <p>These are small details but they add up. An email that says "I see you're at SALESFORCE, INC." is an immediate tell. An email that says "I see you're at Salesforce" is invisible as automated.</p>
+  </div>
+</div>
+
+<div class="step-wrapper">
+  <div class="step-header">
+    <div class="num">Step 5</div>
+    <div class="head">
+      <h2>Generate AI personalization snippets</h2>
+      <div class="sub">One or two variable sentences that make the whole email feel human</div>
+    </div>
+  </div>
+  <div class="step-body">
+    <p>Write your email template first — manually. It should have a clear structure: opener (personalized), problem statement (generic but relevant to segment), value proposition (generic), call to action (specific and low friction).</p>
+
+    <p>Then identify which parts should be personalized per recipient. Usually 1-2 sentences. Those are what AI generates.</p>
+
+    <h3>Prompt design principles</h3>
+    <ul>
+      <li>Give AI the specific enriched data points to work from — don't ask it to infer from a company name alone</li>
+      <li>Constrain the output length tightly (under 15 words usually)</li>
+      <li>Specify a prefix so every line starts consistently</li>
+      <li>Ask for casual, conversational tone — not formal, not salesy</li>
+      <li>Tell it what NOT to do (no hashtags, no exclamation marks, don't mention AI)</li>
+    </ul>
+
+    <div class="prompt-box">
+      <div class="prompt-label">Example Prompt — Company Mission Opener</div>
+      <div class="prompt-text">
+        Using the input, write one sentence summarizing what this company does.
+        <br>Input: "{{company_description}}"
+        <br>Keep under 12 words. Use specific keywords from the input.
+        <br>Complete with this prefix: "Saw you're helping"
+        <br>Write casually, as if you noticed this naturally.
+        <br>Do not start with "I."
+      </div>
+      <div class="prompt-example">
+        <strong>Output example:</strong> "Saw you're helping enterprise teams automate their compliance workflows at scale."
+      </div>
+    </div>
+
+    <div class="prompt-box">
+      <div class="prompt-label">Example Prompt — Hiring Signal Opener</div>
+      <div class="prompt-text">
+        Using the job title and company description inputs, write one sentence
+        inferring why this company is hiring for this role.
+        <br>Job title: "{{open_role}}"
+        <br>Company description: "{{company_description}}"
+        <br>Think about what problem hiring this role is meant to solve.
+        <br>Keep under 15 words. Complete with prefix: "Noticed you're hiring a {{open_role}} —"
+      </div>
+      <div class="prompt-example">
+        <strong>Output example:</strong> "Noticed you're hiring a Revenue Operations Manager — usually means the data infrastructure is ready to scale."
+      </div>
+    </div>
+
+    <div class="prompt-box">
+      <div class="prompt-label">Example Prompt — Recent Post Personalization</div>
+      <div class="prompt-text">
+        Using the input, complete a sentence about the person's most recent
+        LinkedIn post.
+        <br>Input: "{{linkedin_post_text}}"
+        <br>Keep under 12 words. Use specific keywords from the post.
+        <br>Complete with prefix: "Saw your post about"
+        <br>Do not include hashtags (#) or quotation marks in the output.
+      </div>
+      <div class="prompt-example">
+        <strong>Output example:</strong> "Saw your post about rebuilding your inbound lead routing from scratch."
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>Run snippets in test batches of 10-20 first.</strong> Review every output before scaling. Look for hallucinations (AI making up facts that aren't in the input), outputs that are too salesy, and cases where the enrichment data was too thin to produce a good personalization. Refine the prompt before scaling.
+    </div>
+  </div>
+</div>
+
+<div class="step-wrapper">
+  <div class="step-header">
+    <div class="num">Step 6</div>
+    <div class="head">
+      <h2>Set up your sending infrastructure</h2>
+      <div class="sub">The deliverability layer that determines whether any of this works</div>
+    </div>
+  </div>
+  <div class="step-body">
+    <p>No outbound automation works if your emails land in spam. Deliverability setup comes before launch, not after you notice problems.</p>
+
+    <h3>Burner domain setup (required)</h3>
+    <ol>
+      <li>Register variant domains that redirect to your primary site (e.g., getclayapp.com → clay.com, tryclayapp.com → clay.com)</li>
+      <li>Set up 2-3 inboxes per domain, each with a different "rep" name</li>
+      <li>Configure proper DNS records: SPF, DKIM, DMARC for each domain</li>
+      <li>Add each inbox to your warming tool (Instantly or Smartlead) for 3-4 weeks before sending outbound</li>
+    </ol>
+
+    <h3>Sending limits</h3>
+    <ul>
+      <li>Maximum 20-30 emails per day per inbox</li>
+      <li>Maximum 2-3 emails per day per domain (across all inboxes)</li>
+      <li>Space sends throughout the day — don't batch them at 9am</li>
+      <li>Use high variation in email text — automated sequences with identical copy trigger spam filters</li>
+    </ul>
+
+    <p>With 10 burner domains and 2 inboxes each, you're at 400–600 sends per day — more than enough for most teams' outbound volume.</p>
+
+    <h3>Sequence structure</h3>
+    <p>Keep it to 3-4 touchpoints over 2-3 weeks. Each follow-up should add a new angle, not just re-send the same message with "just checking in." If they didn't respond to a problem-focused opener, try a proof-focused follow-up. If that doesn't work, offer something specific. The final email should close the loop genuinely — not try one more time.</p>
+  </div>
+</div>
+
+<div class="step-wrapper">
+  <div class="step-header">
+    <div class="num">Step 7</div>
+    <div class="head">
+      <h2>Push to your sequencer and launch</h2>
+      <div class="sub">From Clay table to active campaign in minutes</div>
+    </div>
+  </div>
+  <div class="step-body">
+    <p>Once your Clay table has clean, enriched, personalized leads with validated emails and generated snippets, push them to your email sequencer.</p>
+
+    <p><strong>If using Clay Sequencer (native):</strong> You can run the entire campaign directly inside Clay without any export. Create a campaign from the Actions tab, set up your email steps with your template and the personalization variable columns mapped in, and launch. All replies come back to a unified inbox inside Clay.</p>
+
+    <p><strong>If using Instantly or Smartlead:</strong> Use Clay's native Instantly or Smartlead integration. Map your email column, your personalization variable columns, and your campaign name. Run in batches to avoid bulk upload rate limits.</p>
+
+    <h3>Managing replies</h3>
+    <p>Positive replies should route to the assigned rep immediately. Negative replies and unsubscribes should trigger automatic suppression in Clay to prevent re-enrollment. "Not now" replies should move the contact to a re-engagement list with a 90-day trigger to re-enrich and re-evaluate.</p>
+
+    <div class="callout">
+      <strong>The unified inbox model:</strong> With 10-20 burner domains running simultaneously, you can't monitor each inbox separately. Both Instantly and Smartlead provide a unified inbox view across all sending accounts. One person can manage all replies — that's the model that lets a small team run at scale.
+    </div>
+  </div>
+</div>
+
+<div class="step-wrapper">
+  <div class="step-header">
+    <div class="num">Step 8</div>
+    <div class="head">
+      <h2>Measure, iterate, and automate re-enrichment</h2>
+      <div class="sub">The loop that compounds your results over time</div>
+    </div>
+  </div>
+  <div class="step-body">
+    <p>Run your first campaign for two weeks before changing anything. Then look at performance by ICP segment:</p>
+
+    <ul>
+      <li>Which company sub-segments produced the best positive response rates?</li>
+      <li>Which personalization prompt outputs correlated with higher opens and replies?</li>
+      <li>Which email in the sequence drove the most replies?</li>
+      <li>What did the companies that booked meetings have in common that others didn't?</li>
+    </ul>
+
+    <p>The answers tell you where to narrow your ICP, which signals to prioritize in enrichment, and which opener angles resonate most. Apply those learnings to your next campaign.</p>
+
+    <h3>Set up re-enrichment on a schedule</h3>
+    <p>Data decays. Contacts change jobs. Companies raise new funding. Tech stacks change. Set your Clay table to refresh key enrichment columns on a schedule — weekly for timing signals (funding, hiring), monthly for firmographics. This keeps your pipeline fresh without manual effort, and surfaces re-engagement opportunities for contacts that became irrelevant and are now relevant again.</p>
+  </div>
+</div>
+
+<h2>Results benchmarks</h2>
+
+<div class="results-grid">
+  <div class="result-card">
+    <div class="num">10x</div>
+    <div class="company">Rootly</div>
+    <div class="label">Outbound team performance, 100% automated workflows</div>
+  </div>
+  <div class="result-card">
+    <div class="num">2x</div>
+    <div class="company">Rippling</div>
+    <div class="label">Cold email performance, zero engineering resources</div>
+  </div>
+  <div class="result-card">
+    <div class="num">$1M+</div>
+    <div class="company">Sendoso</div>
+    <div class="label">Pipeline generated from enriched personalized outreach</div>
+  </div>
+  <div class="result-card">
+    <div class="num">+19%</div>
+    <div class="company">Terrapinn</div>
+    <div class="label">Revenue per rep with -90% prospect acquisition cost</div>
+  </div>
+  <div class="result-card">
+    <div class="num">+30%</div>
+    <div class="company">Pump</div>
+    <div class="label">Booked meetings with 6x faster rep ramp time</div>
+  </div>
+  <div class="result-card">
+    <div class="num">140%</div>
+    <div class="company">Intercom</div>
+    <div class="label">Growth in outbound-sourced pipeline</div>
+  </div>
+</div>
+
+<div class="quote">
+  "Clay has allowed us to scale our outreach in ways we never thought possible. We're able to automate key processes, reach more leads, and stay incredibly efficient without sacrificing the quality of our engagement. It's been a game-changer for us."
+  <div class="attribution">— Darri Atlason, Head of Growth, Harmonic</div>
+</div>
+
+<h2>Common failure modes and how to avoid them</h2>
+
+<p><strong>Automating before validating manually.</strong> Before scaling any campaign to 500+ contacts, manually review 10-20 outputs. Look at the generated email for each one. Would you send that? Is the personalization accurate? Does the opener make sense? Fix issues at small scale before they become expensive at large scale.</p>
+
+<p><strong>Skipping email validation.</strong> Sending to unvalidated email addresses drives bounce rates up, which damages domain reputation, which drives you toward spam folders. Always validate before enrolling in a sequence. This is a 5-minute step that protects everything else.</p>
+
+<p><strong>Using your primary domain for outbound.</strong> If your primary domain gets flagged as spam, your entire business's email communication is at risk. Burner domains are not optional.</p>
+
+<p><strong>Changing too many things at once when results are low.</strong> If response rates are low, change one variable per iteration: the subject line, the opening line, the ICP filter, the sequence timing. If you change three things simultaneously, you won't know what moved the needle.</p>
+
+<p><strong>Not suppressing responders and opt-outs from the source list.</strong> If you're running ongoing campaigns, maintain a suppression list in your Clay table and check every new batch against it before enrollment. Reaching out to someone who already replied negatively is a reputation problem you don't need.</p>
+
+<hr style="margin: 48px 0; border: none; border-top: 1px solid #eee;">
+
+<p style="font-size: 14px; color: #888;">Walk through every step of this workflow with live Clay table templates in <a href="https://clay.com/university/automated-outbound">Clay University's Automated Outbound course</a>. Or <a href="https://app.clay.com/signup">start building for free</a> — no credit card required.</p>
+
+</body>
+</html>
