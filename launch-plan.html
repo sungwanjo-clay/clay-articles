@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Marketplace Launch Plan — 100 Skills</title>
+</head>
+<body>
+<style>
+  :root{
+    --paper:#f4f2ea; --surface:#fffdf7; --raised:#f0ede2;
+    --ink:#1c1a15; --muted:#6f6c61; --faint:#928e81; --hairline:#e6e2d6;
+    --accent:#6f9a08; --accent-soft:#eaf4cf;
+    --critical:#b3402a; --critical-soft:#f3e2db;
+    --tA:#55534a; --tB:#3f6b8c; --tC:#7c8a1c; --tD:#b3462a; --tE:#a9781a;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+    --paper:#15140f; --surface:#201e17; --raised:#191811;
+    --ink:#ece8db; --muted:#a49f90; --faint:#7c7768; --hairline:#332f24;
+    --accent:#b6d94a; --accent-soft:#2b3312;
+    --critical:#e0765b; --critical-soft:#3a1e17;
+    --tA:#b6b3a6; --tB:#7fb0d6; --tC:#c3d65e; --tD:#e0765b; --tE:#e0b24e;
+  }}
+  :root[data-theme="dark"]{
+    --paper:#15140f; --surface:#201e17; --raised:#191811;
+    --ink:#ece8db; --muted:#a49f90; --faint:#7c7768; --hairline:#332f24;
+    --accent:#b6d94a; --accent-soft:#2b3312;
+    --critical:#e0765b; --critical-soft:#3a1e17;
+    --tA:#b6b3a6; --tB:#7fb0d6; --tC:#c3d65e; --tD:#e0765b; --tE:#e0b24e;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--paper); color:var(--ink); font-family:var(--sans);
+    line-height:1.5; margin:0; -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1120px; margin:0 auto; padding:clamp(20px,4vw,52px) clamp(16px,3vw,32px) 80px;}
+  header.top{border-bottom:2px solid var(--ink); padding-bottom:22px; margin-bottom:30px;}
+  .eyebrow{font-family:var(--mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--muted); margin:0 0 10px;}
+  h1{font-size:clamp(1.9rem,4vw,2.9rem); line-height:1.04; letter-spacing:-.02em; margin:0;
+    text-wrap:balance; font-weight:800;}
+  .sub{color:var(--muted); max-width:64ch; margin:14px 0 0; font-size:1.02rem;}
+  .stats{display:flex; flex-wrap:wrap; gap:10px; margin-top:22px;}
+  .stat{background:var(--surface); border:1px solid var(--hairline); border-radius:10px; padding:10px 14px; min-width:130px;}
+  .stat b{display:block; font-size:1.35rem; letter-spacing:-.01em; font-variant-numeric:tabular-nums;}
+  .stat span{font-family:var(--mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.1em; color:var(--faint);}
+  h2{font-size:1.24rem; letter-spacing:-.01em; margin:46px 0 6px; display:flex; align-items:center; gap:10px;}
+  h2 .k{font-family:var(--mono); font-size:.72em; color:var(--paper); background:var(--ink); padding:2px 8px; border-radius:6px;}
+  .lead{color:var(--muted); margin:0 0 16px; font-size:.96rem; max-width:74ch;}
+
+  .legend{display:flex; flex-wrap:wrap; gap:16px 22px; align-items:center; margin:18px 0 26px; font-family:var(--mono); font-size:11.5px; color:var(--muted);}
+  .legend .it{display:flex; align-items:center; gap:7px;}
+  .sw{width:14px; height:14px; border-radius:4px; display:inline-block;}
+  .own{font-family:var(--mono); font-weight:700; font-size:11px; padding:1px 6px; border-radius:5px; border:1px solid;}
+  .own.F{color:var(--tC); border-color:var(--tC);}
+  .own.P{color:var(--tB); border-color:var(--tB);}
+  .own.S{color:var(--tD); border-color:var(--tD);}
+
+  .ganttscroll{overflow-x:auto; border:1px solid var(--hairline); border-radius:14px; background:var(--surface);}
+  .gantt{min-width:760px; padding:6px 0 12px;}
+  .grow{display:grid; grid-template-columns:230px repeat(5,1fr); align-items:center; min-height:30px;}
+  .ghead{border-bottom:1px solid var(--hairline);}
+  .ghead>div{font-family:var(--mono); font-size:11px; letter-spacing:.06em; color:var(--faint); padding:9px 10px; text-transform:uppercase;}
+  .ghead>div+div{border-left:1px dashed var(--hairline); text-align:center;}
+  .glabel{font-family:var(--mono); font-size:11.5px; padding:4px 12px; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; cursor:help;}
+  .glabel[title]{border-bottom:1px dotted var(--faint); width:fit-content; max-width:100%;}
+  .gtrack{grid-column:2 / span 5; display:grid; grid-template-columns:repeat(5,1fr);
+    background:repeating-linear-gradient(90deg,transparent 0,transparent calc(20% - 1px),var(--hairline) calc(20% - 1px),var(--hairline) 20%);}
+  .bar{height:19px; border-radius:5px; margin:4px 5px; font-family:var(--mono); font-size:10px; color:#fff;
+    display:flex; align-items:center; padding:0 8px; white-space:nowrap; overflow:hidden; box-shadow:0 1px 0 rgba(0,0,0,.06);}
+  .grouprow>div{font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--faint); padding:12px 12px 3px;}
+  .tA{background:var(--tA)} .tB{background:var(--tB)} .tC{background:var(--tC)} .tD{background:var(--tD)} .tE{background:var(--tE)}
+  .bar.soft{opacity:.42; background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.25) 0 6px,transparent 6px 12px);}
+  :root[data-theme="dark"] .bar{color:#12110c;}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .bar{color:#12110c;}}
+  .launchmark{grid-column:6; text-align:center; font-family:var(--mono); font-size:10px; color:var(--critical); font-weight:700;}
+  .hint{font-family:var(--mono); font-size:10.5px; color:var(--faint); margin:8px 2px 0;}
+
+  .tscroll{overflow-x:auto; border:1px solid var(--hairline); border-radius:12px; margin-bottom:6px;}
+  table{border-collapse:collapse; width:100%; min-width:820px; font-size:13.5px;}
+  thead th{background:var(--raised); text-align:left; font-family:var(--mono); font-weight:600; font-size:10.5px;
+    letter-spacing:.08em; text-transform:uppercase; color:var(--muted); padding:10px 12px; border-bottom:1px solid var(--hairline);}
+  td{padding:11px 12px; vertical-align:top;}
+  tr.dr td{border-bottom:none;}
+  tr.eli5 td{border-bottom:1px solid var(--hairline);}
+  tr.eli5:last-child td{border-bottom:none;}
+  td.id{font-family:var(--mono); font-weight:700; white-space:nowrap;}
+  td.task{font-weight:650; min-width:150px;}
+  td .oq{color:var(--muted); font-style:italic;}
+  .dep{font-family:var(--mono); font-size:11px; background:var(--accent-soft); color:var(--accent); padding:1px 6px; border-radius:5px; margin:0 3px 3px 0; display:inline-block; white-space:nowrap;}
+  .none{color:var(--faint); font-family:var(--mono); font-size:11px;}
+  .pole{display:inline-block; font-family:var(--mono); font-size:9.5px; font-weight:700; color:var(--critical); border:1px solid var(--critical); border-radius:4px; padding:0 4px; margin-left:6px; vertical-align:middle;}
+  tr.dr.crit td{background:var(--critical-soft);}
+  .eli5 .cell{border-left:3px solid var(--accent); padding:3px 0 3px 12px;}
+  .eli5 .lbl{font-family:var(--mono); font-size:9px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent);}
+  .eli5 .txt{font-size:12.5px; color:var(--ink); opacity:.82; margin-top:2px; max-width:100ch;}
+
+  .callouts{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; margin-top:18px;}
+  .card{background:var(--surface); border:1px solid var(--hairline); border-radius:12px; padding:16px 18px;}
+  .card.crit{border-color:var(--critical); background:var(--critical-soft);}
+  .card.good{border-color:var(--accent);}
+  .card h3{margin:0 0 4px; font-size:.82rem; font-family:var(--mono); text-transform:uppercase; letter-spacing:.08em;}
+  .card p{margin:6px 0 0; font-size:13px; color:var(--muted);}
+  .card .rec{color:var(--ink); font-weight:650;}
+  .card .eli{font-size:12.5px; color:var(--ink); opacity:.82; margin-top:8px; border-left:3px solid var(--accent); padding-left:10px;}
+  footer{margin-top:44px; padding-top:16px; border-top:1px solid var(--hairline); font-family:var(--mono); font-size:11px; color:var(--faint);}
+  code{font-family:var(--mono); font-size:.9em;}
+  .modelgrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:12px; margin:6px 0 4px;}
+  .mc{background:var(--surface); border:1px solid var(--hairline); border-radius:11px; padding:14px 16px;}
+  .mc .t{font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); margin-bottom:5px;}
+  .mc b{font-size:1.02rem;}
+  .mc p{margin:5px 0 0; font-size:12.5px; color:var(--muted);}
+  .badgechip{display:inline-block; font-family:var(--mono); font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:999px; border:1px solid var(--accent); color:var(--accent); background:var(--accent-soft); margin:0 4px 4px 0;}
+  /* completed items — struck through in table view */
+  tr.dr.done td:not(.id){ text-decoration:line-through; opacity:.5; }
+  tr.eli5.done .txt{ text-decoration:line-through; opacity:.5; }
+  tr.dr.done td.id{ color:var(--accent); }
+  tr.dr.done td.id::before{ content:"\2713 "; font-weight:800; }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <p class="eyebrow">Clay Skills Marketplace · Launch plan</p>
+    <h1>The road to ~100 skills</h1>
+    <p class="sub">50 factory-built + 50 creator-submitted, every category ≥ 2. We now invite <b>both</b> executable skills (run in Clay via MCP/CLI) <b>and</b> copywriting/strategy skills. Sequenced by dependency, not calendar. Every item has an <b>“In plain terms”</b> line — what it is and why, in one sentence.</p>
+    <div class="stats">
+      <div class="stat"><b>~100</b><span>skills at launch</span></div>
+      <div class="stat"><b>50 / 50</b><span>factory / creator</span></div>
+      <div class="stat"><b>exec + copy</b><span>both invited</span></div>
+      <div class="stat"><b>2-axis</b><span>effectiveness × cost → value</span></div>
+      <div class="stat"><b>Model</b><span>locked Aug 11</span></div>
+    </div>
+  </header>
+
+  <section id="status">
+    <h2>Where we are <span class="k">AUG 11</span></h2>
+    <p class="lead">The scoring model and all open one-way-door decisions are now locked. The eval layer (Track A) runs autonomously for P/S/E; the big remaining work is the <b>golden-dataset layer</b> and the <b>self-serve intake</b> — which is NOT ready, so launch opens curated.</p>
+    <div class="callouts">
+      <div class="card good">
+        <h3>&#10003; Aligned &middot; the model is locked</h3>
+        <p class="rec">Gate → Effectiveness × Cost → Value.</p>
+        <p>Retired the T0–T3 tiers for one <b>gate</b> (safe · runs · no fabrication) + two axes — <b>Effectiveness</b> (objective vs golden set, or rubric) and <b>Cost</b> — combined into <b>Value</b>. Cost = <b>Clay credits + action-executions only</b> (Claude tokens dropped — variable, non-Clay-billed). Golden sets are <b>Clay-generated, self-updating monthly</b> with drift + false-positive monitors. T2 rubric validated (internal-only 1–100). Comparison via <b>best-for tags + social proof</b> — <b>no public creator ranking</b>. Surface = <b>plugin/Terracotta MCP</b>, CLI on escalation.</p>
+        <p class="eli">We agreed how "good" and "cost" are measured, wrote it down, and locked the choices we can't easily undo later.</p>
+      </div>
+      <div class="card crit">
+        <h3>&#9680; Intake &middot; not self-serve yet</h3>
+        <p class="rec">Launch opens curated, not a live form.</p>
+        <p>The worker gateway is proven (P+S rung-2, one full-depth pass), but real self-serve submissions are blocked by two things: (1) <b>no gateway op for a deliberate terminal <code>failed</code>-with-findings</b> (the safety-block outcome); (2) the <b>creator form lives in Ploy and isn't built</b>. (<code>SUBMISSION-GUIDELINES.md</code> now invites copy/strategy skills — done.)</p>
+        <p class="eli">The tester works, but the front door and one safety exit aren't built — so for now we take submissions by hand, not a public form.</p>
+      </div>
+      <div class="card">
+        <h3>&#9873; Tomorrow</h3>
+        <p style="color:var(--ink);"><b>Sung</b> — send a short Slack note: submission <b>link + guidelines coming next week</b> (curated / early-access; invites exec + copy skills). No full message or badges yet — keep it lean.<br>
+        <b>Factory</b> — finalize + commit the PRD (#12) → apply the Ploy contract changes (#13) → add the <b>determinism metric</b> (#14) → <b>kick off one Clay-generated golden set</b> (#16, the long pole) → run the <b>managed-function commodity eval</b> (#24 — classify all 19, capture auto-DQ signatures).<br>
+        <b>Ploy</b> — the contract deltas (<code>docs/PLOY-CONTRACT-CHANGES.md</code>) + start the submission form + the safety-block terminal op.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="master">
+    <style>
+      details.grp{border:1px solid var(--hairline); border-radius:12px; background:var(--surface); margin:12px 0; overflow:hidden;}
+      details.grp>summary{cursor:pointer; list-style:none; padding:12px 16px; font-family:var(--mono); font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink); background:var(--raised);}
+      details.grp>summary::-webkit-details-marker{display:none;}
+      details.grp>summary::before{content:"\25B8  "; color:var(--faint);}
+      details.grp[open]>summary::before{content:"\25BE  ";}
+      details.grp .gnote{padding:10px 16px; font-size:12.5px; color:var(--muted); border-bottom:1px solid var(--hairline);}
+      details.grp .tscroll{border:0; border-radius:0; margin:0;}
+      table.master{min-width:900px;}
+      table.chk td:first-child, table.chk th:first-child{width:34px; text-align:center;}
+      table.chk input[type=checkbox]{width:16px; height:16px; cursor:pointer; accent-color:var(--accent); vertical-align:middle;}
+      table.chk td.do{font-weight:600; min-width:300px;} table.chk label{cursor:pointer;}
+      table.chk td.do .eli{font-weight:400; font-size:11.5px; color:var(--muted); margin-top:3px; max-width:70ch;}
+      table.chk tr:has(input:checked) td.do label{ text-decoration:line-through; opacity:.5; }
+      .eff{font-family:var(--mono); font-size:10.5px; font-weight:700; padding:1px 6px; border-radius:5px; border:1px solid var(--hairline); color:var(--muted);}
+      .tag{font-family:var(--mono); font-size:10px; font-weight:700; padding:1px 6px; border-radius:5px; border:1px solid; white-space:nowrap; margin:0 3px 3px 0; display:inline-block;}
+      .tag.next{color:var(--critical); border-color:var(--critical);}
+      .tag.p0{color:var(--critical); border-color:var(--critical); background:var(--critical-soft);}
+      .tag.p1{color:var(--accent); border-color:var(--accent);}
+      .tag.p2{color:var(--faint); border-color:var(--hairline);}
+      .tag.done{color:var(--accent); border-color:var(--accent); background:var(--accent-soft);}
+    </style>
+    <h2>Project checklist <span class="k">FULL</span></h2>
+    <p class="lead">Everything, grouped and collapsible. Each item has a plain-terms line, a doc link, a T-shirt <b>effort</b>, a <b>priority</b> (P0 launch-critical &middot; P1 before creator skills land &middot; P2 later &middot; <span style="color:var(--critical)">★ NEXT</span> = do now/tomorrow), and its <b>dependencies</b>. Ticks are saved in your browser.</p>
+    <div class="callouts" style="margin-bottom:6px;"><div class="card good"><h3>&#9873; Do next (derisk-first)</h3><p style="color:var(--ink);"><b>Factory:</b> <b>E4 stand up the skill-writer</b> + <b>E3 restart skill writing</b> (the derisker) &rarr; A6 determinism &rarr; C2 kick the golden set &rarr; C7 commodity eval (#24) &rarr; commit the PRD (#12).<br><b>Sung:</b> send the L1 teaser &middot; approve the Creator Guide + guidelines package &middot; set the credit ceiling for #24.<br><b>Ploy:</b> contract deltas &middot; start the B1 form &middot; build the A4 safety-block op.</p><p class="eli">Standing up the skill-writer first means every other skill we build rides an improving, self-checking builder &mdash; so the 50-skill goal stops being 50 hand-builds.</p></div></div>
+    <details class="grp" open><summary>E &middot; Skill production &mdash; the derisker, start now</summary><div class="gnote">Stand up the builder, then restart production. This is the highest-leverage work: it turns "build 50 skills" into "run a builder 50 times."</div><div class="tscroll"><table class="chk master"><thead><tr><th>&#10003;</th><th>ID</th><th>Do &mdash; what &amp; why (plain terms)</th><th>Ref</th><th>Effort</th><th>Priority &middot; deps</th><th>Own</th></tr></thead><tbody><tr><td><input type="checkbox" id="E4" ></td><td class="id">E4</td><td class="do"><label for="E4">Stand up the skill-writer (live-KB + repo, self-eval)</label><div class="eli">The reusable builder: reads the live GTM KB + our repo, drafts, and self-evals. Standing it up derisks the whole plan &mdash; it is how we produce 50 good skills fast.</div></td><td><code>SKILL-WRITER-REARCH.md</code></td><td><span class="eff">L</span></td><td><span class="tag next">★ NEXT</span><span class="tag p0">P0</span></td><td><span class="own F">F</span></td></tr><tr><td><input type="checkbox" id="E3" ></td><td class="id">E3</td><td class="do"><label for="E3">Restart skill writing: seed base set + rewrite outdated SKILL.md</label><div class="eli">Turn skill production back on with the new writer; seed from Gunner’s repo, fix stale SKILL.md files.</div></td><td><code>BACKLOG.md</code></td><td><span class="eff">M</span></td><td><span class="tag next">★ NEXT</span><span class="tag p0">P0</span><br><span class="dep">E4</span></td><td><span class="own F">F</span></td></tr><tr><td><input type="checkbox" id="E1" ></td><td class="id">E1</td><td class="do"><label for="E1">Finish A12 (last Wave-A skill)</label><div class="eli">Build the one leftover buying-signals skill from the first batch.</div></td><td><code>BACKLOG.md</code></td><td><span class="eff">S</span></td><td><span class="tag p1">P1</span></td><td><span class="own F">F</span></td></tr><tr><td><input type="checkbox" id="E2" ></td><td class="id">E2</td><td class="do"><label for="E2">Build out &rarr; 50</label><div class="eli">Produce ~39 more skills so the shelves are not empty at launch.</div></td><td><code>BACKLOG.md</code></td><td><span class="eff">XL</span></td><td><span class="tag p1">P1</span><br><span class="dep">E3</span></td><td><span class="own F">F</span></td></tr></tbody></table></div></details>
+    <details class="grp" open><summary>Long poles &mdash; start early, everything waits on them</summary><div class="tscroll"><table class="chk master"><thead><tr><th>&#10003;</th><th>ID</th><th>Do &mdash; what &amp; why (plain terms)</th><th>Ref</th><th>Effort</th><th>Priority &middot; deps</th><th>Own</th></tr></thead><tbody><tr><td><input type="checkbox" id="L1" ></td><td class="id">L1</td><td class="do"><label for="L1">Send the creator teaser &rarr; then the full invite</label><div class="eli">Short note now that the submission link + guidelines land next week; fuller invite follows. Invites both exec + copy/strategy skills.</div></td><td><code>SUBMISSION-GUIDELINES.md</code></td><td><span class="eff">S</span></td><td><span class="tag next">★ NEXT</span><span class="tag p0">P0</span><br><span class="dep">D5</span></td><td><span class="own S">S</span></td></tr><tr><td><input type="checkbox" id="L2" ></td><td class="id">L2</td><td class="do"><label for="L2">Design review (2 wk): admin, detail page, form</label><div class="eli">Agree the page blueprints before anyone builds.</div></td><td><code>DESIGN-BRIEF.md</code></td><td><span class="eff">M</span></td><td><span class="tag p0">P0</span></td><td><span class="own S">S</span></td></tr><tr><td><input type="checkbox" id="L3" ></td><td class="id">L3</td><td class="do"><label for="L3">Expand backlog &rarr; the 50 we build</label><div class="eli">Decide which 50 skills the factory builds, seeded from Gunner’s repo.</div></td><td><code>BACKLOG.md</code></td><td><span class="eff">M</span></td><td><span class="tag p1">P1</span></td><td><span class="own F">F</span></td></tr></tbody></table></div></details>
+    <details class="grp" open><summary>A &middot; Eval layer &amp; runner</summary><div class="gnote"><b>Where the eval layer is built:</b> design in <code>EVAL-SYSTEM-DESIGN.md</code> (+ <code>EVAL-LAYER-DESIGN.md</code>, <code>EVAL-PROTOCOL.md</code>); the worker/runner in <code>A4-WORKER-SPEC.md</code>, <code>WORKER-GATEWAY-CONTRACT.md</code>, <code>WORKER-STANDING-LOOP.md</code>; row contracts in <code>README.md</code>. Runner v0 = a scheduled agent session polling the Supabase queue (no standalone service yet); v1 = an Agent SDK worker.</div><div class="tscroll"><table class="chk master"><thead><tr><th>&#10003;</th><th>ID</th><th>Do &mdash; what &amp; why (plain terms)</th><th>Ref</th><th>Effort</th><th>Priority &middot; deps</th><th>Own</th></tr></thead><tbody><tr><td><input type="checkbox" id="A1" checked></td><td class="id">A1</td><td class="do"><label for="A1">R1 contract fix</label><div class="eli">Made our checklist and Ploy’s match so a valid submission is not bounced.</div></td><td><code>README.md</code></td><td><span class="eff">S</span></td><td><span class="tag done">✓ DONE</span></td><td><span class="own F">F</span></td></tr><tr><td><input type="checkbox" id="A2" checked></td><td class="id">A2</td><td class="do"><label for="A2">First real full-depth pass</label><div class="eli">Ran one real skill end to end through the machine.</div></td><td><code>RUNBOOK-RUNG2.md</code></td><td><span class="eff">M</span></td><td><span class="tag done">✓ DONE</span></td><td><span class="own F">F</span></td></tr><tr><td><input type="checkbox" id="A6" ></td><td class="id">A6</td><td class="do"><label for="A6">Determinism metric</label><div class="eli">Run each skill N times, measure output drift &mdash; the cheap “solid vs flaky” signal.</div></td><td><code>AUTO-ADVANCE-EVAL-SPEC.md</code></td><td><span class="eff">S</span></td><td><span class="tag next">★ NEXT</span><span class="tag p0">P0</span><br><span class="dep">A2</span></td><td><span class="own F">F</span></td></tr><tr><td><input type="checkbox" id="A3" ></td><td class="id">A3</td><td class="do"><label for="A3">Workflow-build recipe</label><div class="eli">Codify the fix for the trickier workflow skills into the build recipe.</div></td><td><code>EVAL-PROTOCOL.md</code></td><td><span class="eff">M</span></td><td><span class="tag p1">P1</span><br><span class="dep">A2</span></td><td><span class="own F">F</span></td></tr><tr><td><input type="checkbox" id="A4" ></td><td class="id">A4</td><td class="do"><label for="A4">On-demand worker (queue-driven) + safety-block op</label><div class="eli">A robot that watches the queue and tests each submission itself, and can fail an unsafe one with findings.</div></td><td><code>A4-WORKER-SPEC.md</code></td><td><span class="eff">L</span></td><td><span class="tag p0">P0</span><br><span class="dep">A2</span></td><td><span class="own F">F</span> <span class="own P">P</span></td></tr><tr><td><input type="checkbox" id="A5" ></td><td class="id">A5</td><td class="do"><label for="A5">Eval-complete sign-off</label><div class="eli">Confirm the machine handles every skill type off the queue, then call it done.</div></td><td><code>EVAL-SYSTEM-DESIGN.md</code></td><td><span class="eff">S</span></td><td><span class="tag p1">P1</span><br><span class="dep">A3</span><span class="dep">A4</span><span class="dep">A6</span></td><td><span class="own F">F</span></td></tr></tbody></table></div></details>
+    <details class="grp" open><summary>C &middot; Golden dataset &amp; scoring</summary><div class="tscroll"><table class="chk master"><thead><tr><th>&#10003;</th><th>ID</th><th>Do &mdash; what &amp; why (plain terms)</th><th>Ref</th><th>Effort</th><th>Priority &middot; deps</th><th>Own</th></tr></thead><tbody><tr><td><input type="checkbox" id="C1" ></td><td class="id">C1</td><td class="do"><label for="C1">Scorer (coverage + value)</label><div class="eli">Report-card machine: a skill’s answers + reference answers &rarr; matched %, cost.</div></td><td><code>EVAL-LAYER-DESIGN.md</code></td><td><span class="eff">M</span></td><td><span class="tag p0">P0</span></td><td><span class="own F">F</span></td></tr><tr><td><input type="checkbox" id="C2" ></td><td class="id">C2</td><td class="do"><label for="C2">Clay-generated golden set (kick off one job)</label><div class="eli">Make the answer key by running Clay’s most thorough waterfall; honest that it is a reference, not truth.</div></td><td><code>GOLDEN-DATASET-EMAIL-SPEC.md</code></td><td><span class="eff">L</span></td><td><span class="tag next">★ NEXT</span><span class="tag p0">P0</span><br><span class="dep">C1</span></td><td><span class="own F">F</span></td></tr><tr><td><input type="checkbox" id="C7" ></td><td class="id">C7</td><td class="do"><label for="C7">Commodity eval + result-based dedupe (all 19 functions)</label><div class="eli">Test which built-in functions a skill cannot improve (one best skill, auto-DQ copycats); judge duplicates by results not titles. Every new function re-runs it.</div></td><td><code>EVAL-SYSTEM-DESIGN.md &sect;2f</code> &middot; <code>SKILL-WRITER-REARCH.md</code></td><td><span class="eff">L</span></td><td><span class="tag next">★ NEXT</span><span class="tag p0">P0</span><br><span class="dep">C1</span><span class="dep">C2</span></td><td><span class="own F">F</span></td></tr><tr><td><input type="checkbox" id="C3" ></td><td class="id">C3</td><td class="do"><label for="C3">Monthly auto-regen</label><div class="eli">Refresh the answer key every month, diff, and re-score.</div></td><td><code>EVAL-SYSTEM-DESIGN.md</code></td><td><span class="eff">M</span></td><td><span class="tag p1">P1</span><br><span class="dep">C2</span></td><td><span class="own F">F</span> <span class="own P">P</span></td></tr><tr><td><input type="checkbox" id="C4" ></td><td class="id">C4</td><td class="do"><label for="C4">Monitors + false-positive loop</label><div class="eli">Alarm on drift or a big score drop; investigate before trusting the number.</div></td><td><code>EVAL-SYSTEM-DESIGN.md</code></td><td><span class="eff">M</span></td><td><span class="tag p1">P1</span><br><span class="dep">C3</span></td><td><span class="own F">F</span></td></tr><tr><td><input type="checkbox" id="C5" ></td><td class="id">C5</td><td class="do"><label for="C5">Label-withholding service</label><div class="eli">A locked vault that holds the answer key and grades server-side, so skills never peek.</div></td><td><code>EVAL-SYSTEM-DESIGN.md</code></td><td><span class="eff">M</span></td><td><span class="tag p1">P1</span><br><span class="dep">L2</span></td><td><span class="own P">P</span> <span class="own F">F</span></td></tr><tr><td><input type="checkbox" id="C6" ></td><td class="id">C6</td><td class="do"><label for="C6">First living-playbook entry</label><div class="eli">Grade one job end to end and write down best approach + best skill + numbers.</div></td><td><code>EVAL-LAYER-DESIGN.md</code></td><td><span class="eff">M</span></td><td><span class="tag p1">P1</span><br><span class="dep">C1</span><span class="dep">A6</span></td><td><span class="own F">F</span></td></tr></tbody></table></div></details>
+    <details class="grp" open><summary>B &middot; Front end (Ploy)</summary><div class="tscroll"><table class="chk master"><thead><tr><th>&#10003;</th><th>ID</th><th>Do &mdash; what &amp; why (plain terms)</th><th>Ref</th><th>Effort</th><th>Priority &middot; deps</th><th>Own</th></tr></thead><tbody><tr><td><input type="checkbox" id="B1" ></td><td class="id">B1</td><td class="do"><label for="B1">Onboarding form</label><div class="eli">The sign-up page where a creator drops their skill; not ready &rarr; curated intake first.</div></td><td><code>PLOY-CONTRACT-CHANGES.md</code></td><td><span class="eff">M</span></td><td><span class="tag p0">P0</span><br><span class="dep">L2</span></td><td><span class="own P">P</span></td></tr><tr><td><input type="checkbox" id="B2" ></td><td class="id">B2</td><td class="do"><label for="B2">/admin moderation</label><div class="eli">Staff screen to approve / fix / reject at 100-skill scale.</div></td><td><code>PLOY-CONTRACT-CHANGES.md</code></td><td><span class="eff">L</span></td><td><span class="tag p1">P1</span><br><span class="dep">L2</span></td><td><span class="own P">P</span></td></tr><tr><td><input type="checkbox" id="B3" ></td><td class="id">B3</td><td class="do"><label for="B3">Public detail page</label><div class="eli">Storefront listing: what it does, proof, cost (credits + actions), run requirements.</div></td><td><code>PLOY-HANDOFF-RECIPE-ENGINE.md</code></td><td><span class="eff">L</span></td><td><span class="tag p0">P0</span><br><span class="dep">A2</span></td><td><span class="own P">P</span></td></tr><tr><td><input type="checkbox" id="B4" ></td><td class="id">B4</td><td class="do"><label for="B4">Use-case index + best-for tags</label><div class="eli">Group skills by job and point at the best per job (positive tags, no leaderboard).</div></td><td><code>PLOY-CONTRACT-CHANGES.md</code></td><td><span class="eff">M</span></td><td><span class="tag p1">P1</span><br><span class="dep">B3</span><span class="dep">C6</span></td><td><span class="own P">P</span></td></tr></tbody></table></div></details>
+    <details class="grp" open><summary>D &middot; GTM &amp; creator flow</summary><div class="tscroll"><table class="chk master"><thead><tr><th>&#10003;</th><th>ID</th><th>Do &mdash; what &amp; why (plain terms)</th><th>Ref</th><th>Effort</th><th>Priority &middot; deps</th><th>Own</th></tr></thead><tbody><tr><td><input type="checkbox" id="D5" checked></td><td class="id">D5</td><td class="do"><label for="D5">Update submission scope</label><div class="eli">Rulebook now invites copy/strategy skills; the two shapes are in.</div></td><td><code>SUBMISSION-GUIDELINES.md</code></td><td><span class="eff">S</span></td><td><span class="tag done">✓ DONE</span></td><td><span class="own F">F</span> <span class="own S">S</span></td></tr><tr><td><input type="checkbox" id="D6" ></td><td class="id">D6</td><td class="do"><label for="D6">Infra ticket &mdash; marketplace.clay.com</label><div class="eli">Point the production domain at the Ploy app (DNS/cert).</div></td><td><code>WORKBACK-LAUNCH.md</code></td><td><span class="eff">S</span></td><td><span class="tag p1">P1</span></td><td><span class="own S">S</span> <span class="own F">F</span></td></tr><tr><td><input type="checkbox" id="D1" ></td><td class="id">D1</td><td class="do"><label for="D1">Creator-flow dry run</label><div class="eli">Pretend to be a creator: submit &rarr; test &rarr; review &rarr; publish once before real people try.</div></td><td><code>WORKBACK-LAUNCH.md</code></td><td><span class="eff">M</span></td><td><span class="tag p1">P1</span><br><span class="dep">A5</span><span class="dep">B3</span></td><td><span class="own F">F</span></td></tr><tr><td><input type="checkbox" id="D2" ></td><td class="id">D2</td><td class="do"><label for="D2">Open self-serve intake</label><div class="eli">Open the public form &mdash; gated on the worker safety-block op (A4) + the Ploy form (B1).</div></td><td><code>PLOY-CONTRACT-CHANGES.md</code></td><td><span class="eff">S</span></td><td><span class="tag p0">P0</span><br><span class="dep">A4</span><span class="dep">B1</span></td><td><span class="own F">F</span> <span class="own P">P</span></td></tr><tr><td><input type="checkbox" id="D4" ></td><td class="id">D4</td><td class="do"><label for="D4">Secret rotation</label><div class="eli">Change the passwords used while building.</div></td><td><span class="none">&mdash;</span></td><td><span class="eff">XS</span></td><td><span class="tag p2">P2</span></td><td><span class="own F">F</span></td></tr></tbody></table></div></details>
+    <script>
+      (function(){try{
+        var boxes=document.querySelectorAll("table.chk input[type=checkbox]");
+        for(var i=0;i<boxes.length;i++){(function(b){
+          var k="clay-launch-"+b.id;
+          try{ if(localStorage.getItem(k)==="1") b.checked=true; else if(localStorage.getItem(k)==="0") b.checked=false; }catch(e){}
+          b.addEventListener("change",function(){ try{ localStorage.setItem(k, b.checked?"1":"0"); }catch(e){} });
+        })(boxes[i]);}
+      }catch(e){}})();
+    </script>
+  </section>
+
+  <section>
+    <h2>The scoring model <span style="font-family:var(--mono); font-size:.6em; color:var(--faint); letter-spacing:.08em;">LOCKED AUG 11</span></h2>
+    <p class="lead">One gate, two axes, one combined metric. Topic never penalizes a good skill — Effectiveness is scored relative to the best possible skill for <em>that</em> job; a loose "job tag" only scopes what's comparable, it is not a ranking bucket.</p>
+    <div class="modelgrid">
+      <div class="mc"><div class="t">Gate · pass/fail</div><b>Verified</b><p>Safe · runs · never fabricates. Every published skill clears it.</p></div>
+      <div class="mc"><div class="t">Axis 1</div><b>Effectiveness</b><p>0–100, job-relative. <b>Objective</b> (precision/recall/coverage vs the golden set) where truth exists; else <b>rubric</b>. Instrument always labeled.</p></div>
+      <div class="mc"><div class="t">Axis 2</div><b>Cost</b><p>Clay <b>credits</b> + <b>action-executions</b> / record (median + p90). No tokens, no $.</p></div>
+      <div class="mc"><div class="t">Combined</div><b>Value</b><p>Effectiveness per unit cost — the "best + cheapest for this job" signal behind the tags.</p></div>
+    </div>
+    <p class="lead" style="margin-top:12px;">Creator recognition (in the result payload, to make it feel special):
+      <span class="badgechip">Verified</span>
+      <span class="badgechip">Best-for {job}</span>
+      <span class="badgechip">Reference</span>
+      <span class="badgechip">Founding Contributor</span>
+    </p>
+  </section>
+
+  <section>
+    <h2>Timeline</h2>
+    <p class="lead">Relative weeks (W1–W5) — they compress if we move faster. Striped bar = lead time we don't control (creators writing after we ask). The two long poles start in W1 because everything waits on them. Self-serve intake (D2) is gated on the gateway safety-block op + the Ploy form.</p>
+    <div class="legend">
+      <span class="it"><span class="sw tA"></span>A · Eval/runner</span>
+      <span class="it"><span class="sw tB"></span>B · Front end</span>
+      <span class="it"><span class="sw tC"></span>C · Golden data</span>
+      <span class="it"><span class="sw tD"></span>D · GTM</span>
+      <span class="it"><span class="sw tE"></span>E · Skill production</span>
+      <span class="it"><span class="own F">F</span>Factory</span>
+      <span class="it"><span class="own P">P</span>Ploy</span>
+      <span class="it"><span class="own S">S</span>Sung</span>
+    </div>
+
+    <div class="ganttscroll"><div class="gantt">
+      <div class="grow ghead"><div>Task · hover for plain terms</div><div>W1</div><div>W2</div><div>W3</div><div>W4</div><div>W5</div></div>
+
+      <div class="grow grouprow"><div>Long poles</div></div>
+      <div class="grow"><div class="glabel" title="Tomorrow: short teaser that the submission link + guidelines land next week (curated, no live form yet). Fuller invite follows; creators need ~3 weeks to write.">L1 · Creator message (teaser → invite)</div><div class="gtrack"><div class="bar tD" style="grid-column:1">teaser</div><div class="bar tD soft" style="grid-column:2 / span 3">link + guidelines → creators prepare</div></div></div>
+      <div class="grow"><div class="glabel" title="Agree the blueprints (admin, detail page, form) before builders start. Two weeks of sign-off.">L2 · Design review (2 wk)</div><div class="gtrack"><div class="bar tD" style="grid-column:1 / span 2">admin · detail · form</div></div></div>
+      <div class="grow"><div class="glabel" title="Write the list of which 50 skills we build, seeded from Gunner's repo.">L3 · Expand backlog → 50</div><div class="gtrack"><div class="bar tD" style="grid-column:1">scope</div></div></div>
+
+      <div class="grow grouprow"><div>A · Eval / runner</div></div>
+      <div class="grow"><div class="glabel" title="Make our checklist and Ploy's match so a valid submission isn't wrongly bounced. (Done.)">A1 · R1 contract fix</div><div class="gtrack"><div class="bar tA" style="grid-column:1">R1 ✓</div></div></div>
+      <div class="grow"><div class="glabel" title="Run one real skill end-to-end through the machine. (Done.)">A2 · First real full-depth pass</div><div class="gtrack"><div class="bar tA" style="grid-column:1">rung 3 ✓</div></div></div>
+      <div class="grow"><div class="glabel" title="Run each skill several times on the same test and record how much its output drifts — the cheap signal for 'safe to run as-is vs needs a deterministic rewrite'.">A6 · Determinism metric</div><div class="gtrack"><div class="bar tA" style="grid-column:1">variance</div></div></div>
+      <div class="grow"><div class="glabel" title="Write the fix for the trickier 'workflow' skills into the build recipe.">A3 · Workflow-build recipe</div><div class="gtrack"><div class="bar tA" style="grid-column:2">recipe</div></div></div>
+      <div class="grow"><div class="glabel" title="A robot that watches the queue and tests each new skill automatically — required at 100-skill scale.">A4 · On-demand worker (queue-driven)</div><div class="gtrack"><div class="bar tA" style="grid-column:2 / span 2">standing worker + queue trigger</div></div></div>
+      <div class="grow"><div class="glabel" title="Confirm the machine handles every skill type, then call it done.">A5 · Eval-complete sign-off</div><div class="gtrack"><div class="bar tA" style="grid-column:4">sign-off</div></div></div>
+
+      <div class="grow grouprow"><div>B · Front end</div></div>
+      <div class="grow"><div class="glabel" title="The sign-up page where a creator drops their skill + info. Blocked on the design review; not ready for tomorrow's message.">B1 · Onboarding form</div><div class="gtrack"><div class="bar tB" style="grid-column:2">form</div></div></div>
+      <div class="grow"><div class="glabel" title="The back-office screen where a reviewer approves / fixes / rejects, at 100-skill scale.">B2 · /admin moderation</div><div class="gtrack"><div class="bar tB" style="grid-column:3">admin</div></div></div>
+      <div class="grow"><div class="glabel" title="The storefront page: what it does, proof, cost (credits + actions), badges, and run requirements (MCP required / +CLI).">B3 · Public detail page</div><div class="gtrack"><div class="bar tB" style="grid-column:3 / span 2">detail + badges</div></div></div>
+      <div class="grow"><div class="glabel" title="Group skills by job and surface the best-for tags per job (not a public leaderboard).">B4 · Use-case index + tags</div><div class="gtrack"><div class="bar tB" style="grid-column:4">index</div></div></div>
+
+      <div class="grow grouprow"><div>C · Golden dataset (Clay-generated)</div></div>
+      <div class="grow"><div class="glabel" title="A grading machine: given a skill's answers + the reference answers, returns coverage / match / value + cost. Report-card maker.">C1 · Scorer (coverage + value)</div><div class="gtrack"><div class="bar tC" style="grid-column:1">scorer</div></div></div>
+      <div class="grow"><div class="glabel" title="Generate the reference answers by running Clay's most thorough waterfall over a sample of N records. Disclaimed as a reference, not independent truth.">C2 · Clay-generated golden set</div><div class="gtrack"><div class="bar tC" style="grid-column:1 / span 2">generate vN</div></div></div>
+      <div class="grow"><div class="glabel" title="Regenerate the golden set every month automatically, diff vs last month, re-score skills.">C3 · Monthly auto-regen</div><div class="gtrack"><div class="bar tC" style="grid-column:2 / span 3">monthly</div></div></div>
+      <div class="grow"><div class="glabel" title="Alarms for dataset drift or a big recall/precision drop; on a drop, flag false positives and root-cause before trusting the number.">C4 · Monitors + false-positive loop</div><div class="gtrack"><div class="bar tC" style="grid-column:2 / span 3">alarms</div></div></div>
+      <div class="grow"><div class="glabel" title="A locked service that holds the answer key and grades server-side, so a skill under test never sees the labels.">C5 · Label-withholding service</div><div class="gtrack"><div class="bar tC" style="grid-column:3">service</div></div></div>
+      <div class="grow"><div class="glabel" title="For one job, run every submission against the fixture and publish the first living playbook entry: best approach + best skill + numbers.">C6 · First playbook entry</div><div class="gtrack"><div class="bar tC" style="grid-column:4">flywheel</div></div></div>
+      <div class="grow"><div class="glabel" title="Classify all 19 Clay managed functions commodity vs differentiable; capture I/O signatures to auto-DQ bare wrappers; make dedupe result-based. Starts tomorrow (#24); every new function re-runs it.">C7 · Commodity eval + result-based dedupe</div><div class="gtrack"><div class="bar tC" style="grid-column:1 / span 2">classify 19 · signatures</div></div></div>
+
+      <div class="grow grouprow"><div>D · GTM</div></div>
+      <div class="grow"><div class="glabel" title="DONE — SUBMISSION-GUIDELINES now invites copy/strategy skills (the two shapes are in).">D5 · Update submission scope ✓</div><div class="gtrack"><div class="bar tC" style="grid-column:1">done ✓</div></div></div>
+      <div class="grow"><div class="glabel" title="File an infra ticket to point marketplace.clay.com at the Ploy app (production domain + DNS/cert).">D6 · Infra ticket · marketplace.clay.com</div><div class="gtrack"><div class="bar tD" style="grid-column:4 / span 2">domain</div></div></div>
+      <div class="grow"><div class="glabel" title="Pretend to be a creator and go through submit → test → review → publish once before real people try.">D1 · Creator-flow test</div><div class="gtrack"><div class="bar tD" style="grid-column:4">e2e test</div></div></div>
+      <div class="grow"><div class="glabel" title="Open the self-serve form to the public — gated on the gateway safety-block op + the Ploy form.">D2 · Open self-serve intake</div><div class="gtrack"><div class="bar tD" style="grid-column:5">open</div></div></div>
+      <div class="grow"><div class="glabel" title="Change the passwords used while building.">D4 · Secret rotation</div><div class="gtrack"><div class="bar tD" style="grid-column:5">rotate</div></div></div>
+
+      <div class="grow grouprow"><div>E · Skill production</div></div>
+      <div class="grow"><div class="glabel" title="The reusable builder: before writing ANY skill it reads Gunner's LIVE GTM-architect KB for the architecture, then our repo's gotchas / fixtures / playbook / surface-selection ref, then drafts and self-evals — so it improves automatically as the KB evolves.">E4 · Skill-writer (live-KB + repo)</div><div class="gtrack"><div class="bar tE" style="grid-column:1 / span 2">builder</div></div></div>
+      <div class="grow"><div class="glabel" title="Seed the base skill set from Gunner's repo; rewrite outdated SKILL.md; build the surface-selection reference.">E3 · Seed base + rewrite SKILL.md</div><div class="gtrack"><div class="bar tE" style="grid-column:1 / span 2">base set</div></div></div>
+      <div class="grow"><div class="glabel" title="Build the one leftover skill from the first batch (buying-signals monitor).">E1 · Finish A12 (Wave A)</div><div class="gtrack"><div class="bar tE" style="grid-column:2">A12</div></div></div>
+      <div class="grow"><div class="glabel" title="Build ~39 more skills ourselves so the shelves aren't empty on day one.">E2 · Build out → 50</div><div class="gtrack"><div class="bar tE" style="grid-column:2 / span 3">~13 · ~13 · ~13 + buffer</div></div></div>
+
+      <div class="grow" style="border-top:1px solid var(--hairline); margin-top:4px;"><div class="glabel" style="color:var(--critical); font-weight:700;">▶ LAUNCH</div><div class="gtrack"><div class="launchmark">≈ W5 (curated intake earlier)</div></div></div>
+    </div></div>
+    <p class="hint">↑ hover any task name for the plain-terms version · scroll sideways on narrow screens</p>
+  </section>
+
+  <!-- TRACK A -->
+  <h2><span class="k">A</span> Eval layer &amp; runner</h2>
+  <p class="lead">The machine that safety-checks a skill, runs it for real, prices it (credits + actions), and stamps it Verified. Hard unknowns solved — finish it, make it run itself, and add the determinism signal.</p>
+  <div class="tscroll"><table>
+    <thead><tr><th>ID</th><th>Task</th><th>Scope / done</th><th>Key tasks</th><th>Deps</th><th>Open questions</th><th>Own</th></tr></thead>
+    <tbody>
+      <tr class="dr done"><td class="id">A1</td><td class="task">R1 contract fix</td><td>Frozen <code>eval-run.v1</code> matches the live gateway; validator green.</td><td>Add optional evidence/example fields; update fixtures + validator.</td><td><span class="none">none</span></td><td class="oq">—</td><td><span class="own F">F</span></td></tr>
+      <tr class="eli5 done"><td colspan="7"><div class="cell"><span class="lbl">In plain terms</span><div class="txt">Two checklists disagreed on where a couple of boxes go. Made them match so a good submission isn't rejected on a technicality.</div></div></td></tr>
+
+      <tr class="dr done"><td class="id">A2</td><td class="task">First real full-depth pass</td><td>A real skill went source → safety → live test → priced → <code>in_review</code> through the gateway.</td><td>Assemble payload; stage transcript; POST; verify.</td><td><span class="dep">A1</span></td><td class="oq">—</td><td><span class="own F">F</span></td></tr>
+      <tr class="eli5 done"><td colspan="7"><div class="cell"><span class="lbl">In plain terms</span><div class="txt">Ran one real skill all the way through the machine, front to back — proof the assembly line works for real.</div></div></td></tr>
+
+      <tr class="dr"><td class="id">A6</td><td class="task">Determinism metric <span class="pole">NEW</span></td><td>Run each skill N× on the same fixture; record output-variance on the eval run + skill row.</td><td>Add to the runner; surface as the "consistency" signal.</td><td><span class="dep">A2</span></td><td class="oq">N per skill? Diff threshold that flags "needs a deterministic rewrite"?</td><td><span class="own F">F</span></td></tr>
+      <tr class="eli5"><td colspan="7"><div class="cell"><span class="lbl">In plain terms</span><div class="txt">Run the same skill a few times and see if it gives the same answer. If it drifts, it needs tightening — the cheapest way to tell a solid skill from a flaky one.</div></div></td></tr>
+
+      <tr class="dr"><td class="id">A3</td><td class="task">Workflow-build recipe</td><td>Repeatable build for the trickier "workflow" skills (balanced diamond, prep fan-out).</td><td>Codified ✓; decide how automated.</td><td><span class="dep">A2</span></td><td class="oq">Auto-build, or human-assist the showcases?</td><td><span class="own F">F</span></td></tr>
+      <tr class="eli5"><td colspan="7"><div class="cell"><span class="lbl">In plain terms</span><div class="txt">A few skills jam on one build step. We found the spacer-piece fix; write it into the instructions so every build clicks together.</div></div></td></tr>
+
+      <tr class="dr crit"><td class="id">A4</td><td class="task">On-demand worker <span class="pole">LAUNCH-CRIT</span></td><td>Queued skills get tested automatically. Includes the missing terminal <code>failed</code>-with-findings gateway op (safety-block outcome).</td><td>Standing watcher loop (F) + queue trigger (P); safety-block op; spend caps.</td><td><span class="dep">A2</span></td><td class="oq">Watcher = persistent session or Ploy cron? Poll rate + max parallel?</td><td><span class="own F">F</span> <span class="own P">P</span></td></tr>
+      <tr class="eli5"><td colspan="7"><div class="cell"><span class="lbl">In plain terms</span><div class="txt">Right now a person presses "go" on each test. Build the robot that watches the queue and tests each new submission itself — and give it a proper way to fail a skill that's unsafe.</div></div></td></tr>
+
+      <tr class="dr"><td class="id">A5</td><td class="task">Eval-complete sign-off</td><td>Every skill type runs end-to-end off the queue; watcher live.</td><td>Regression pass; write the "done" bar.</td><td><span class="dep">A3</span> <span class="dep">A4</span> <span class="dep">A6</span></td><td class="oq">Bar = all 9 types, or the launch catalog?</td><td><span class="own F">F</span></td></tr>
+      <tr class="eli5"><td colspan="7"><div class="cell"><span class="lbl">In plain terms</span><div class="txt">Final once-over that the machine handles every skill type off the queue, then call it finished.</div></div></td></tr>
+    </tbody>
+  </table></div>
+
+  <!-- TRACK B -->
+  <h2><span class="k">B</span> Front end</h2>
+  <p class="lead">Everything people see and click: where creators submit, where reviewers approve, where shoppers browse. Ploy builds it; the design review (L2) sets the look. Contract deltas: <code>docs/PLOY-CONTRACT-CHANGES.md</code>.</p>
+  <div class="tscroll"><table>
+    <thead><tr><th>ID</th><th>Task</th><th>Scope / done</th><th>Key tasks</th><th>Deps</th><th>Open questions</th><th>Own</th></tr></thead>
+    <tbody>
+      <tr class="dr"><td class="id">B1</td><td class="task">Onboarding form</td><td>Collects the required inputs; matches gtmskills onboarding feel. <b>Not ready for tomorrow → curated intake first.</b></td><td>skill.md · name · work email · LinkedIn→avatar · description · consent.</td><td><span class="dep">L2</span></td><td class="oq">Avatar auto-fetched or uploaded? Consent wording?</td><td><span class="own P">P</span></td></tr>
+      <tr class="eli5"><td colspan="7"><div class="cell"><span class="lbl">In plain terms</span><div class="txt">The sign-up page where a creator drops their skill and details. Not built yet — so tomorrow we take submissions by hand.</div></div></td></tr>
+
+      <tr class="dr"><td class="id">B2</td><td class="task">/admin moderation</td><td>Reviewer can approve / edit / request-changes at 100-skill scale.</td><td>WYSIWYG (done) · edit-history · queue filters · bulk actions.</td><td><span class="dep">L2</span></td><td class="oq">Who moderates? Bulk-approve for 100 rows?</td><td><span class="own P">P</span></td></tr>
+      <tr class="eli5"><td colspan="7"><div class="cell"><span class="lbl">In plain terms</span><div class="txt">The staff-only screen where a reviewer approves, fixes, or rejects — easy even with a hundred waiting.</div></div></td></tr>
+
+      <tr class="dr"><td class="id">B3</td><td class="task">Public detail page</td><td>What it does, proof, cost, badges, and run requirements — filled from test results.</td><td>Cost = <b>credits + actions</b> (tokens dropped); Effectiveness+Value; badges (Verified/Reference/Best-for); "Clay MCP required / +CLI".</td><td><span class="dep">A2</span></td><td class="oq">Which numbers headline the Verified badge? Freshness date display?</td><td><span class="own P">P</span></td></tr>
+      <tr class="eli5"><td colspan="7"><div class="cell"><span class="lbl">In plain terms</span><div class="txt">The product listing shoppers read: what it does, proof it works, what it costs, its badges, and what you need installed to run it.</div></div></td></tr>
+
+      <tr class="dr"><td class="id">B4</td><td class="task">Use-case index + tags</td><td>Skills grouped by job; best-for tags surfaced per job. <b>No public creator ranking.</b></td><td>Tags fed by Value (C6); category landing pages for SEO; social proof (installs).</td><td><span class="dep">B3</span> <span class="dep">C6</span></td><td class="oq">How to show ties? Which "best-for" tags per category?</td><td><span class="own P">P</span></td></tr>
+      <tr class="eli5"><td colspan="7"><div class="cell"><span class="lbl">In plain terms</span><div class="txt">Aisle signs that group skills by job and point at the best one for that job — via positive tags, not a scoreboard that ranks creators against each other.</div></div></td></tr>
+    </tbody>
+  </table></div>
+
+  <!-- TRACK C -->
+  <h2><span class="k">C</span> Golden dataset &amp; scoring</h2>
+  <p class="lead">How we prove one skill beats another. Golden sets are <b>Clay-generated</b> (Clay's own thorough waterfall over N records), self-updating monthly — reported as <b>coverage / match-to-reference</b>, never "accuracy". Only gradeable jobs need one; the rest use the rubric.</p>
+  <div class="tscroll"><table>
+    <thead><tr><th>ID</th><th>Task</th><th>Scope / done</th><th>Key tasks</th><th>Deps</th><th>Open questions</th><th>Own</th></tr></thead>
+    <tbody>
+      <tr class="dr"><td class="id">C1</td><td class="task">Scorer</td><td>Given predictions + reference answers → coverage / match / completeness + 2 cost axes → Value.</td><td>Pure code, no Clay calls; reusable across skills.</td><td><span class="none">none</span></td><td class="oq">What counts as "match" — exact, same domain, or deliverable?</td><td><span class="own F">F</span></td></tr>
+      <tr class="eli5"><td colspan="7"><div class="cell"><span class="lbl">In plain terms</span><div class="txt">The report-card machine: feed it a skill's answers and the reference answers, it returns "matched 87%, cost this much."</div></div></td></tr>
+
+      <tr class="dr"><td class="id">C2</td><td class="task">Clay-generated golden set</td><td>Reference answers from Clay's most-thorough waterfall over N records, frozen as <code>gold vN</code>. Disclaimed as reference, not independent truth.</td><td>Pick one job (find-work-email / firmographics); generate; freeze; provenance.</td><td><span class="dep">C1</span></td><td class="oq">N per job? Which job first? Sample selection criteria?</td><td><span class="own F">F</span></td></tr>
+      <tr class="eli5"><td colspan="7"><div class="cell"><span class="lbl">In plain terms</span><div class="txt">Instead of begging for an outside answer key, we make one by running Clay's best, most complete path — and we're honest that it's a reference, not ground truth.</div></div></td></tr>
+
+      <tr class="dr"><td class="id">C3</td><td class="task">Monthly auto-regen</td><td>Regenerate <code>gold vN+1</code> monthly, diff vs prior, re-score every skill in the job.</td><td>Scheduled job; version + timestamp each row.</td><td><span class="dep">C2</span></td><td class="oq">Cadence per job (contact data drifts faster than firmographics)?</td><td><span class="own F">F</span> <span class="own P">P</span></td></tr>
+      <tr class="eli5"><td colspan="7"><div class="cell"><span class="lbl">In plain terms</span><div class="txt">The answer key refreshes itself every month, so scores stay current as the world (and Clay) change.</div></div></td></tr>
+
+      <tr class="dr crit"><td class="id">C4</td><td class="task">Monitors + false-positive loop <span class="pole">NEW</span></td><td>Alarm on dataset drift OR a big recall/precision drop; on a drop, flag suspected false positives and root-cause before trusting.</td><td>Drift thresholds; investigation runbook (platform vs golden vs skill).</td><td><span class="dep">C3</span></td><td class="oq">Drop threshold that pages a human? Who owns triage?</td><td><span class="own F">F</span></td></tr>
+      <tr class="eli5"><td colspan="7"><div class="cell"><span class="lbl">In plain terms</span><div class="txt">Because the answer key defines success, we watch it like a hawk — if scores plunge, we check whether the key broke before we blame the skills.</div></div></td></tr>
+
+      <tr class="dr"><td class="id">C5</td><td class="task">Label-withholding service</td><td>Locked store for the reference answers + grade-it API; the skill never sees them.</td><td>Table + scoring RPC (P); curation + freshness (F).</td><td><span class="dep">L2</span></td><td class="oq">Freshness cadence per category? Owner of the refresh job?</td><td><span class="own P">P</span> <span class="own F">F</span></td></tr>
+      <tr class="eli5"><td colspan="7"><div class="cell"><span class="lbl">In plain terms</span><div class="txt">A locked vault that holds the answer key and grades inside itself, so a skill under test can never peek — even a sneaky one.</div></div></td></tr>
+
+      <tr class="dr"><td class="id">C6</td><td class="task">First playbook entry</td><td>For one job: run every submission against the fixture; publish the first living playbook entry (best approach + best skill + numbers + traps).</td><td>Feeds the Reference badge + best-for tags; proves the flywheel.</td><td><span class="dep">C1</span> <span class="dep">A6</span></td><td class="oq">Which job seeds the first entry?</td><td><span class="own F">F</span></td></tr>
+      <tr class="eli5"><td colspan="7"><div class="cell"><span class="lbl">In plain terms</span><div class="txt">Pick one job, grade everything that does it, and write down "here's the best way and the best skill, with numbers" — the first page of the living recipe book.</div></div></td></tr>
+
+      <tr class="dr"><td class="id">C7</td><td class="task">Commodity eval + result-based dedupe <span class="pole">NEW</span></td><td>Classify all <b>19 Clay managed functions</b> commodity vs differentiable (bare-call baseline vs best-wrapped delta on a real public-entity panel). Capture each function's <code>inputSchema/outputSchema</code> → auto-DQ signature for bare wrappers. Dedupe becomes <b>result-based</b>: run every passing skill, compare results to baseline/incumbent — same → duplicate, different → publish.</td><td>#24 tomorrow: pull 19 schemas → panel → baselines → wrapped deltas → "don't-build-against" list. Standing rule: every NEW managed function re-runs this (alpha ground moves).</td><td><span class="dep">C1</span> <span class="dep">C2</span></td><td class="oq">Delta threshold for "commodity"? Credit ceiling per baseline run?</td><td><span class="own F">F</span></td></tr>
+      <tr class="eli5"><td colspan="7"><div class="cell"><span class="lbl">In plain terms</span><div class="txt">Clay's 19 built-in functions are shared vending machines. We test which ones a skill can't meaningfully improve — those get one best skill and auto-reject copycats — and we judge duplicates by what a skill actually produces, not its title. New machines get the same test as Clay adds them. See EVAL-SYSTEM-DESIGN §2f.</div></div></td></tr>
+    </tbody>
+  </table></div>
+
+  <!-- TRACK D -->
+  <h2><span class="k">D</span> GTM &amp; creator flow</h2>
+  <p class="lead">Getting real creators in and the doors open. Tomorrow's message opens a <b>curated / early-access</b> intake — the self-serve form (D2) waits on the gateway safety-block op and the Ploy form.</p>
+  <div class="tscroll"><table>
+    <thead><tr><th>ID</th><th>Task</th><th>Scope / done</th><th>Key tasks</th><th>Deps</th><th>Open questions</th><th>Own</th></tr></thead>
+    <tbody>
+      <tr class="dr crit"><td class="id">L1</td><td class="task">Creator message <span class="pole">LONG POLE</span></td><td>Curated / early-access. Invites <b>exec + copy/strategy</b> skills. <b>Tomorrow = short note that the submission link + guidelines land next week</b>; the fuller invite follows. Kept lean — no badges named yet.</td><td>Send the teaser (S); assemble link + guidelines package (F) for next week; ~15–25 creators to hit 50 skills.</td><td><span class="dep">D5</span></td><td class="oq">Cohort? Invite-only or public list? ~2–3 skills each?</td><td><span class="own S">S</span></td></tr>
+      <tr class="eli5"><td colspan="7"><div class="cell"><span class="lbl">In plain terms</span><div class="txt">Tell outside experts it's coming: a short note now that the link and rules arrive next week. We're inviting both runnable skills and copy/strategy ones. No public form yet, so they reply to us.</div></div></td></tr>
+
+      <tr class="dr crit"><td class="id">L2</td><td class="task">Design review (2 wk) <span class="pole">LONG POLE</span></td><td>Signed-off designs for admin, detail page, form.</td><td>Review cycles; lock remaining UI decisions.</td><td><span class="none">none</span></td><td class="oq">Who's in the review; what makes a design "locked"?</td><td><span class="own S">S</span></td></tr>
+      <tr class="eli5"><td colspan="7"><div class="cell"><span class="lbl">In plain terms</span><div class="txt">Agree the blueprints before anyone builds — two weeks of "here's how the pages look, everyone nod."</div></div></td></tr>
+
+      <tr class="dr done"><td class="id">D5</td><td class="task">Update submission scope</td><td><code>SUBMISSION-GUIDELINES.md</code> updated to invite copy/strategy skills; the two shapes are in.</td><td>Rewrote "what a skill is"; added the two shapes; aligned with the message.</td><td><span class="none">none</span></td><td class="oq">—</td><td><span class="own F">F</span> <span class="own S">S</span></td></tr>
+      <tr class="eli5 done"><td colspan="7"><div class="cell"><span class="lbl">In plain terms</span><div class="txt">Our own rulebook used to say "no frameworks or checklists" — fixed, so it now welcomes the copy/strategy skills we want.</div></div></td></tr>
+
+      <tr class="dr"><td class="id">D1</td><td class="task">Creator-flow test</td><td>Real submit → test → review → publish, end to end on staging.</td><td>Dry-run with a stand-in first.</td><td><span class="dep">A5</span> <span class="dep">B1</span> <span class="dep">B2</span> <span class="dep">B3</span></td><td class="oq">Real affiliate or internal dummy first?</td><td><span class="own S">S</span> <span class="own P">P</span></td></tr>
+      <tr class="eli5"><td colspan="7"><div class="cell"><span class="lbl">In plain terms</span><div class="txt">Walk the whole journey once ourselves before real people show up.</div></div></td></tr>
+
+      <tr class="dr"><td class="id">D2</td><td class="task">Open self-serve intake</td><td>Public form opened. <b>Gated on:</b> gateway safety-block op (A4) + Ploy form (B1).</td><td>Announce; watch volume + rate limits.</td><td><span class="dep">D1</span></td><td class="oq">Soft-open to cohort first? Public rate limits?</td><td><span class="own S">S</span></td></tr>
+      <tr class="eli5"><td colspan="7"><div class="cell"><span class="lbl">In plain terms</span><div class="txt">Open the public front door — only once the form exists and the tester can safely reject a bad skill.</div></div></td></tr>
+
+      <tr class="dr"><td class="id">D6</td><td class="task">Infra ticket · marketplace.clay.com <span class="pole">NEW</span></td><td>Production domain live: marketplace.clay.com points at the Ploy app (DNS + cert).</td><td>File the infra ticket; coordinate the Ploy production deploy.</td><td><span class="dep">B3</span></td><td class="oq">Prod deploy timing vs launch; staging → prod cutover plan?</td><td><span class="own S">S</span> <span class="own P">P</span></td></tr>
+      <tr class="eli5"><td colspan="7"><div class="cell"><span class="lbl">In plain terms</span><div class="txt">Ask infra to put the storefront on its real address — marketplace.clay.com — served from Ploy.</div></div></td></tr>
+
+      <tr class="dr"><td class="id">D4</td><td class="task">Secret rotation</td><td>Worker secret rotated; staging key revoked.</td><td>Rotate both sides; revoke in console.</td><td><span class="dep">A5</span></td><td class="oq">Before launch (safer).</td><td><span class="own S">S</span> <span class="own P">P</span></td></tr>
+      <tr class="eli5"><td colspan="7"><div class="cell"><span class="lbl">In plain terms</span><div class="txt">Change the passwords used while building — new locks once the contractors hand back the keys.</div></div></td></tr>
+    </tbody>
+  </table></div>
+
+  <!-- TRACK E -->
+  <h2><span class="k">E</span> Factory skill production → 50</h2>
+  <p class="lead">The base set + the ~39 skills we build ourselves so the shelves are full on day one. Seeded from Gunner's repo (architecture/judgment) + our surface-selection layer + the gotchas.</p>
+  <div class="tscroll"><table>
+    <thead><tr><th>ID</th><th>Task</th><th>Scope / done</th><th>Key tasks</th><th>Deps</th><th>Open questions</th><th>Own</th></tr></thead>
+    <tbody>
+      <tr class="dr"><td class="id">E4</td><td class="task">Skill-writer (builder) <span class="pole">NEW</span></td><td>Reusable authoring skill. Each run reads the <b>LIVE</b> clay-gtm-architect KB (never copied) + our repo (gotchas, fixtures, surface-selection ref, playbook), drafts, then <b>self-evals</b> against the fixture pack before submit. Future-proof — improves as the KB evolves.</td><td>Re-architect from clay-architect Mode A; wire live-KB read → repo-file read → compose → self-eval loop.</td><td><span class="dep">E3</span> <span class="dep">C6</span></td><td class="oq">Live-KB read every run, or cached per session? Auto-submit or human gate?</td><td><span class="own F">F</span></td></tr>
+      <tr class="eli5"><td colspan="7"><div class="cell"><span class="lbl">In plain terms</span><div class="txt">A skill that writes skills — it studies Gunner's latest playbook and everything we've learned every time before drafting, then grades its own draft, so our skills keep getting better on their own.</div></div></td></tr>
+
+      <tr class="dr"><td class="id">E3</td><td class="task">Seed base + rewrite SKILL.md <span class="pole">NEW</span></td><td>Base set derived from the clay-gtm-architect KB; outdated SKILL.md rewritten to the aligned model; surface-selection reference built.</td><td>Rewrite; re-architect what no longer fits; keep git v1→vN diffs.</td><td><span class="dep">L3</span></td><td class="oq">Which existing drafts are outdated vs keep-as-is?</td><td><span class="own F">F</span></td></tr>
+      <tr class="eli5"><td colspan="7"><div class="cell"><span class="lbl">In plain terms</span><div class="txt">Turn Gunner's architecture into our first solid skills, and fix the older drafts to match the model we just locked.</div></div></td></tr>
+
+      <tr class="dr"><td class="id">E1</td><td class="task">Finish A12</td><td>monitor-buying-signals built + tested (workflow surface).</td><td>Build with the balanced-diamond recipe; eval; record.</td><td><span class="dep">A3</span></td><td class="oq">Auto-build or human-assisted?</td><td><span class="own F">F</span></td></tr>
+      <tr class="eli5"><td colspan="7"><div class="cell"><span class="lbl">In plain terms</span><div class="txt">Build the one leftover skill from the first batch — the buying-signals watcher.</div></div></td></tr>
+
+      <tr class="dr"><td class="id">E2</td><td class="task">Build out → 50</td><td>~39 skills across all 9 categories; each built → tested → committed.</td><td>Cadence ~13/wk (parallel agents).</td><td><span class="dep">L3</span> <span class="dep">A5</span></td><td class="oq">Which categories get how many?</td><td><span class="own F">F</span></td></tr>
+      <tr class="eli5"><td colspan="7"><div class="cell"><span class="lbl">In plain terms</span><div class="txt">Stock the store ourselves so nobody arrives to empty shelves on launch day.</div></div></td></tr>
+    </tbody>
+  </table></div>
+
+  <!-- DECISIONS -->
+  <h2>Decisions <span style="font-family:var(--mono); font-size:.6em; color:var(--faint); letter-spacing:.08em;">LOCKED AUG 11</span></h2>
+  <div class="callouts">
+    <div class="card good"><h3>&#10003; Scoring model</h3><p class="rec">Gate + Effectiveness × Cost → Value.</p><p>Retires T0–T3. Job-relative effectiveness; "job tag" scopes comparison, not a ranking bucket.</p></div>
+    <div class="card good"><h3>&#10003; Cost model</h3><p class="rec">Clay credits + action-executions only.</p><p>Claude tokens dropped (variable, non-Clay). Measured on a fixed CLI harness in the test workspace.</p></div>
+    <div class="card good"><h3>&#10003; Golden dataset</h3><p class="rec">Clay-generated, self-updating, monitored.</p><p>Reported as coverage / match-to-reference + disclaimer; never "accuracy".</p></div>
+    <div class="card good"><h3>&#10003; Surface</h3><p class="rec">Plugin/Terracotta MCP canonical.</p><p>CLI on escalation. Page states what must be installed.</p></div>
+    <div class="card good"><h3>&#10003; Recognition</h3><p class="rec">Badges + social proof, no ranking.</p><p>Verified · Best-for · Reference · Founding Contributor. No public creator leaderboard.</p></div>
+    <div class="card good"><h3>&#10003; Dedupe = result-based</h3><p class="rec">Run it, compare results — not titles.</p><p>Every passing skill is run; same results as the baseline/incumbent → duplicate, different → publish. Commodity managed functions get one best skill; bare wrappers auto-DQ by I/O signature. See EVAL-SYSTEM-DESIGN §2f. First pass = #24 (all 19).</p></div>
+    <div class="card"><h3>&#9680; Hybrid rewrite</h3><p class="rec">Parked — open.</p><p>Preserve judgment, tighten only where ambiguous. Kept undecided until we learn more; message stays non-prescriptive.</p></div>
+  </div>
+
+  <div class="callouts" style="margin-top:14px;">
+    <div class="card crit"><h3>⚑ Critical path</h3><p style="color:var(--ink);">Message (L1) → creators write ~3 weeks → skills arrive → tested → published. <b>Self-serve intake (D2)</b> is gated on the gateway safety-block op (A4) + the Ploy form (B1) — so open <b>curated</b> now, self-serve later. The tester (A5), golden layer (C), and pages (B) must be ready before creator skills land.</p></div>
+    <div class="card"><h3>Retired risk</h3><p>The scary technical blocker (skills jamming on a tricky build step) is solved — the spacer-piece fix passes every test. Testing machine proven, isolated workspace live, scoring model locked. What's left is execution, not unknowns.</p></div>
+  </div>
+
+  <footer>Clay Skills Marketplace · launch plan · updated Aug 11 · relative weeks, dependency-ordered · owners F=Factory P=Ploy S=Sung · companion to docs/WORKBACK-LAUNCH.md · contract deltas in docs/PLOY-CONTRACT-CHANGES.md + docs/COST-MODEL-DECISION.md</footer>
+</div>
+
+</body>
+</html>
